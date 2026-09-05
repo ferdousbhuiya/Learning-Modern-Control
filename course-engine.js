@@ -64,51 +64,47 @@
   }
 
   function renderBenchmarks(){
-    const view=$('#view-benchmarks'); if(!view)return;
+    const view=document.querySelector('#view-benchmarks'); if(!view)return;
     const stageCards=MC.stages.map(s=>{
       const sample=s.lessons.slice(0,Math.min(3,s.lessons.length));
       return `<section class="bg-white rounded-xl shadow-sm border border-outline-variant/40 overflow-hidden">
         <div class="p-unit-5 bg-surface-container-low flex items-start justify-between gap-4">
           <div><span class="text-primary text-[10px] font-bold">STAGE ${String(s.id).padStart(2,'0')}</span><h3 class="font-title-card mt-1">${s.title}</h3><p class="text-[11px] text-on-surface-variant mt-1">${s.description}</p></div>
-          <button type="button" class="px-unit-3 py-unit-2 rounded bg-primary text-on-primary text-[10px] font-bold whitespace-nowrap" onclick="window.openModernControlStage && window.openModernControlStage(${s.id})">Open Stage →</button>
+          <button type="button" class="px-unit-3 py-unit-2 rounded bg-primary text-on-primary text-[10px] font-bold whitespace-nowrap" data-open-benchmark-stage="${s.id}">Open Stage →</button>
         </div>
         <div class="p-unit-5 grid gap-unit-3">
           ${sample.map((l,i)=>`<article class="rounded-lg border border-outline-variant/40 p-unit-4 bg-surface-container-lowest">
             <div class="flex items-center justify-between gap-3"><strong class="text-[12px]">${i+1}. ${l.title}</strong><span class="text-[9px] text-on-surface-variant">Lesson ${i+1}</span></div>
             <p class="text-[12px] mt-2">${l.check.question}</p>
-            <div class="grid gap-unit-2 mt-3">
-              ${l.check.choices.map((choice,j)=>`<button type="button" class="bench-choice p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left text-[11px]" data-stage="${s.id}" data-lesson="${i}" data-choice="${j}">${String.fromCharCode(65+j)}. ${choice}</button>`).join('')}
-            </div>
+            <div class="grid gap-unit-2 mt-3">${l.check.choices.map((choice,j)=>`<button type="button" class="bench-choice p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left text-[11px]" data-stage="${s.id}" data-lesson="${i}" data-choice="${j}">${String.fromCharCode(65+j)}. ${choice}</button>`).join('')}</div>
             <div class="bench-feedback text-[10px] mt-3" data-feedback="${s.id}-${i}"></div>
-            <button type="button" class="mt-3 px-unit-3 py-unit-2 rounded bg-surface-container-high text-[10px] font-bold" onclick="window.openModernControlLesson && window.openModernControlLesson(${s.id},${i})">Review Full Lesson →</button>
+            <button type="button" class="mt-3 px-unit-3 py-unit-2 rounded bg-surface-container-high text-[10px] font-bold" data-review-lesson="${s.id}-${i}">Review Full Lesson →</button>
           </article>`).join('')}
         </div>
       </section>`;
     }).join('');
-    view.innerHTML=`<div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8">
-      <span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span>
-      <h1 class="font-headline-section text-headline-section mt-2">13-Stage Self-Study Checkpoints</h1>
-      <p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">This section now uses the actual lesson quizzes from the complete curriculum. Each stage includes several representative checkpoint questions and a direct link back to the full lesson.</p>
-      <div class="grid lg:grid-cols-2 gap-unit-4 mt-6">${stageCards}</div>
-    </div>`;
-    $('.bench-choice',view).forEach(b=>b.onclick=()=>{
+    view.innerHTML=`<div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span><h1 class="font-headline-section text-headline-section mt-2">13-Stage Self-Study Checkpoints</h1><p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">Checkpoint questions are drawn directly from the full curriculum. Use them to test understanding, then jump back to the related lesson when needed.</p><div class="grid lg:grid-cols-2 gap-unit-4 mt-6">${stageCards}</div></div>`;
+
+    view.querySelectorAll('.bench-choice').forEach(b=>b.addEventListener('click',()=>{
       const s=Number(b.dataset.stage),l=Number(b.dataset.lesson),choice=Number(b.dataset.choice);
       const lesson=MC.stages.find(x=>x.id===s)?.lessons[l]; if(!lesson)return;
-      const group=$('.bench-choice',b.parentElement);
+      const group=[...b.parentElement.querySelectorAll('.bench-choice')];
       group.forEach(x=>x.classList.remove('selected-correct','selected-wrong'));
       b.classList.add(choice===lesson.check.answer?'selected-correct':'selected-wrong');
-      if(choice!==lesson.check.answer) group[lesson.check.answer]?.classList.add('selected-correct');
-      const fb=$(`[data-feedback="${s}-${l}"]`,view);
+      if(choice!==lesson.check.answer && group[lesson.check.answer]) group[lesson.check.answer].classList.add('selected-correct');
+      const fb=view.querySelector('[data-feedback="'+s+'-'+l+'"]');
       if(fb) fb.textContent=choice===lesson.check.answer?'Correct. Explain the reason before moving on.':'Not correct. Review the full lesson, then try again.';
-    });
+    }));
+    view.querySelectorAll('[data-open-benchmark-stage]').forEach(b=>b.addEventListener('click',()=>openStage(Number(b.dataset.openBenchmarkStage))));
+    view.querySelectorAll('[data-review-lesson]').forEach(b=>b.addEventListener('click',()=>{const [s,l]=b.dataset.reviewLesson.split('-').map(Number);openLesson(s,l);}));
   }
 
   function renderCurriculum(){
-    const view=$('#view-curriculum'); if(!view)return;
+    const mount=$('#full-course-grid'); if(!mount)return;
     const done=Object.values(progress.completed).filter(Boolean).length;
     const total=MC.stages.reduce((n,s)=>n+s.lessons.length,0);
-    view.innerHTML=`<section class="mc13-wrap"><div class="mc13-head"><div><small>RESTORED PRE-STITCH COURSE CONTENT</small><h2>Complete 13-Stage Modern Control Curriculum</h2><p>This is the full learning content created before the Stitch redesign, now presented inside the new Stitch platform.</p></div><div class="mc13-progress"><span>Overall progress</span><b>${pct(done,total)}%</b><div class="mc13-bar"><i style="width:${pct(done,total)}%"></i></div></div></div><div class="mc13-grid">${MC.stages.map(s=>{const d=stageDone(s);return `<button class="mc13-card" data-mc-stage="${s.id}"><div class="meta"><span>STAGE ${String(s.id).padStart(2,'0')} · ${s.level}</span><span>${d}/${s.lessons.length}</span></div><h3>${s.title}</h3><p>${s.description}</p><div class="mini"><i style="width:${pct(d,s.lessons.length)}%"></i></div></button>`}).join('')}</div></section>`;
-    $$('[data-mc-stage]',view).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.mcStage)));
+    mount.innerHTML=`<section class="mc13-wrap"><div class="mc13-head"><div><small>FULL LEARNING PATH</small><h2>Complete 13-Stage Modern Control Curriculum</h2><p>Start from mathematics and classical control, then move step by step through state space, controllability, feedback, observers, Lyapunov stability, LQR, MATLAB/Simulink, and advanced projects.</p></div><div class="mc13-progress"><span>Overall progress</span><b>${pct(done,total)}%</b><div class="mc13-bar"><i style="width:${pct(done,total)}%"></i></div></div></div><div class="mc13-grid">${MC.stages.map(s=>{const d=stageDone(s);return `<button class="mc13-card" data-mc-stage="${s.id}"><div class="meta"><span>STAGE ${String(s.id).padStart(2,'0')} · ${s.level}</span><span>${d}/${s.lessons.length}</span></div><h3>${s.title}</h3><p>${s.description}</p><div class="mini"><i style="width:${pct(d,s.lessons.length)}%"></i></div></button>`}).join('')}</div></section>`;
+    $$('[data-mc-stage]',mount).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.mcStage)));
   }
 
   function overlayBase(title,sub,body){

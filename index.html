@@ -63,11 +63,59 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 
 <section id="view-pendulum" class="tab-view"><div class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-8 grid lg:grid-cols-[280px_1fr] gap-unit-6"><aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">INVERTED PENDULUM</span><h2 class="font-headline-modal text-headline-modal mt-2">LQR / Pole Placement</h2><label class="block mt-5 text-[11px]">Controller Mode</label><div class="grid grid-cols-2 gap-unit-2 mt-2"><button id="ctrlLqr" class="p-unit-3 rounded bg-primary text-on-primary">LQR</button><button id="ctrlPole" class="p-unit-3 rounded bg-surface-container">Pole</button></div><label class="block mt-5 text-[11px]">Impulse Force</label><input id="impulseSlider" type="range" min="-20" max="20" value="8" class="w-full mt-2"/><button id="applyImpulse" class="w-full mt-3 px-unit-3 py-unit-2 rounded bg-surface-container-high">Apply Impulse</button><button id="resetPendulum" class="w-full mt-2 px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary">Reset</button></aside><section class="bg-white rounded-xl p-unit-5 shadow-md"><div class="flex items-center justify-between"><div><span class="font-label-caps text-label-caps text-primary">SIMULATION VIEWPORT</span><h2 class="font-headline-modal text-headline-modal">Cart-Pole State Response</h2></div><div id="pendulumStatus" class="text-secondary text-[11px]">Controller: LQR</div></div><div class="canvas-dark rounded-xl h-[420px] mt-4 relative overflow-hidden"><canvas id="pendulumCanvas" class="w-full h-full"></canvas></div><div class="grid grid-cols-4 gap-unit-2 mt-4 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Cart x</div><div id="statX" class="font-bold">0.00 m</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Angle θ</div><div id="statTheta" class="font-bold">0.00°</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Control u</div><div id="statU" class="font-bold">0.00 N</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">State</div><div id="statStable" class="font-bold text-secondary">Stable</div></div></div></section></div></section>
 
-<section id="view-robotics" class="tab-view"><div class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-8 grid lg:grid-cols-[300px_1fr] gap-unit-6"><aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">ROBOTICS COMPUTATIONAL LAB</span><h2 class="font-headline-modal text-headline-modal mt-2">Computed Torque Control</h2><p class="text-[11px] text-on-surface-variant mt-2">Move the two-link arm between targets and observe inverse kinematics and tracking behavior.</p><div class="grid gap-unit-2 mt-5"><button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.45" data-y="0.35">Target A [0.45, 0.35]</button><button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="-0.35" data-y="0.40">Target B [-0.35, 0.40]</button><button class="robotTarget px-unit-3 py-unit-2 rounded bg-primary text-on-primary" data-x="0.20" data-y="0.60">Target C [0.20, 0.60]</button></div></aside><section class="bg-white rounded-xl p-unit-5 shadow-md"><div class="canvas-dark rounded-xl h-[480px] relative overflow-hidden"><canvas id="robotCanvas" class="w-full h-full"></canvas></div><div class="grid grid-cols-3 gap-unit-2 mt-4 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector X</div><div id="robotX" class="font-bold">0.20</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector Y</div><div id="robotY" class="font-bold">0.60</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Tracking Error</div><div id="robotErr" class="font-bold text-secondary">0.000</div></div></div></section></div></section>
+<section id="view-robotics" class="tab-view">
+  <div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-5 grid lg:grid-cols-[300px_1fr] gap-unit-4">
+    <aside class="bg-white rounded-xl p-unit-4 shadow-md">
+      <span class="font-label-caps text-label-caps text-primary">ROBOTICS COMPUTATIONAL LAB</span>
+      <h2 class="font-headline-modal text-headline-modal mt-2">Computed Torque Control</h2>
+      <p class="text-[11px] text-on-surface-variant mt-2">Choose a preset or enter your own reachable X/Y target. The arm moves to the target and the result panel reports position and tracking error.</p>
+      <div class="grid gap-unit-2 mt-4">
+        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.45" data-y="0.35">Target A [0.45, 0.35]</button>
+        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="-0.35" data-y="0.40">Target B [-0.35, 0.40]</button>
+        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.20" data-y="0.60">Target C [0.20, 0.60]</button>
+      </div>
+      <div class="mt-4 p-unit-3 rounded-lg bg-surface-container-low border border-outline-variant/50">
+        <div class="font-title-sub text-title-sub">Custom Target</div>
+        <div class="grid grid-cols-2 gap-unit-2 mt-3">
+          <label class="text-[10px]">X position
+            <input id="robotTargetX" type="number" min="-0.68" max="0.68" step="0.05" value="0.20" class="mt-1 w-full px-unit-2 py-unit-2 rounded border border-outline-variant bg-white"/>
+          </label>
+          <label class="text-[10px]">Y position
+            <input id="robotTargetY" type="number" min="-0.68" max="0.68" step="0.05" value="0.60" class="mt-1 w-full px-unit-2 py-unit-2 rounded border border-outline-variant bg-white"/>
+          </label>
+        </div>
+        <div class="grid grid-cols-2 gap-unit-2 mt-3">
+          <button id="applyRobotTarget" class="px-unit-3 py-unit-2 rounded bg-primary text-on-primary font-bold text-[10px]">Apply X / Y</button>
+          <button id="resetRobotTarget" class="px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary font-bold text-[10px]">Reset</button>
+        </div>
+        <p id="robotTargetNote" class="text-[9px] text-on-surface-variant mt-2">Reachable radius: approximately 0.70 m.</p>
+      </div>
+    </aside>
+    <section class="bg-white rounded-xl p-unit-4 shadow-md">
+      <div class="flex items-center justify-between gap-3">
+        <div><span class="font-label-caps text-label-caps text-primary">ROBOT VIEWPORT</span><h2 class="font-title-card text-title-card mt-1">Two-Link Arm Tracking</h2></div>
+        <div id="robotStatus" class="text-secondary text-[10px]">Tracking target</div>
+      </div>
+      <div class="canvas-dark rounded-xl h-[300px] mt-3 relative overflow-hidden"><canvas id="robotCanvas" class="w-full h-full"></canvas></div>
+      <div class="grid grid-cols-4 gap-unit-2 mt-3 text-center">
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector X</div><div id="robotX" class="font-bold">0.20</div></div>
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector Y</div><div id="robotY" class="font-bold">0.60</div></div>
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Target</div><div id="robotTargetReadout" class="font-bold">[0.20, 0.60]</div></div>
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Tracking Error</div><div id="robotErr" class="font-bold text-secondary">0.000</div></div>
+      </div>
+    </section>
+  </div>
+</section>
 
 <section id="view-theory" class="tab-view"><div class="max-w-[1200px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">THEORY & MATH DOCS</span><h1 class="font-headline-section text-headline-section mt-2">State-Space & Modern Control Reference</h1><div class="grid md:grid-cols-2 gap-unit-4 mt-6"><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">State-Space Form</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">ẋ=Ax+Bu<br/>y=Cx+Du</div><p class="text-[13px] text-on-surface-variant mt-3">A captures internal dynamics, B input influence, C output mapping, and D direct feedthrough.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Controllability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒞=[B AB … Aⁿ⁻¹B]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means the input can influence every state direction.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Observability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒪=[C; CA; …; CAⁿ⁻¹]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means internal states can be reconstructed from outputs over time.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Lyapunov Equation</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">AᵀP+PA=-Q</div><p class="text-[13px] text-on-surface-variant mt-3">For Hurwitz A and Q&gt;0, the positive definite solution P gives a quadratic stability certificate.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">LQR Cost</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">J=∫(xᵀQx+uᵀRu)dt</div><p class="text-[13px] text-on-surface-variant mt-3">Q weights state error; R weights control effort.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Discrete-Time Stability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">x[k+1]=A_dx[k]+B_du[k]</div><p class="text-[13px] text-on-surface-variant mt-3">Stable discrete poles lie strictly inside the unit circle.</p></article></div></div></section>
 
-<section id="view-benchmarks" class="tab-view"><div class="max-w-[1000px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span><h1 class="font-headline-section text-headline-section mt-2">Self-Study Checkpoints</h1><div class="grid gap-unit-4 mt-6"><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 1 — Stability</h3><p class="mt-2 text-[13px]">Which pole set is asymptotically stable for a continuous-time LTI system?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="1" data-choice="A">A. {-2±3j, -5}</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="1" data-choice="B">B. {+1, -4, -6}</button></div><div id="p1Feedback" class="mt-3 text-[11px]"></div></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 2 — Controllability</h3><p class="mt-2 text-[13px]">For an n-state system, controllability requires rank(𝒞)=?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="2" data-choice="A">A. n</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="2" data-choice="B">B. n-1</button></div><div id="p2Feedback" class="mt-3 text-[11px]"></div></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 3 — Observer Error</h3><p class="mt-2 text-[13px]">Which matrix governs Luenberger observer estimation error?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="3" data-choice="A">A. A-LC</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="3" data-choice="B">B. A-BK</button></div><div id="p3Feedback" class="mt-3 text-[11px]"></div></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 4 — LQR</h3><p class="mt-2 text-[13px]">Increasing R in LQR generally encourages what?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="4" data-choice="A">A. Less control effort</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="4" data-choice="B">B. More aggressive input</button></div><div id="p4Feedback" class="mt-3 text-[11px]"></div></article></div></div></section>
+<section id="view-benchmarks" class="tab-view">
+  <div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8">
+    <span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span>
+    <h1 class="font-headline-section text-headline-section mt-2">13-Stage Self-Study Checkpoints</h1>
+    <p class="text-[13px] text-on-surface-variant mt-2">Loading checkpoint questions from the full course curriculum…</p>
+  </div>
+</section>
 </main>
 <script>
 const tabs=['curriculum','pendulum','robotics','theory','benchmarks'];
@@ -115,8 +163,41 @@ document.getElementById('resetPendulum').onclick=resetPendulum;
 document.getElementById('globalReset').onclick=resetPendulum;
 setController('lqr');
 
-const rc=document.getElementById('robotCanvas'),rctx=rc.getContext('2d');let robot={x:.2,y:.6,tx:.2,ty:.6};function rloop(){robot.x+=(robot.tx-robot.x)*.06;robot.y+=(robot.ty-robot.y)*.06;const {w,h,d}=sizeCanvas(rc);rctx.setTransform(d,0,0,d,0,0);rctx.clearRect(0,0,w,h);rctx.fillStyle='#071622';rctx.fillRect(0,0,w,h);const ox=w/2,oy=h*.78,s=260,L1=.38,L2=.32;const x=robot.x,y=robot.y;const r=Math.min(Math.hypot(x,y),L1+L2-.001);const c2=Math.max(-1,Math.min(1,(r*r-L1*L1-L2*L2)/(2*L1*L2)));const q2=Math.acos(c2);const q1=Math.atan2(y,x)-Math.atan2(L2*Math.sin(q2),L1+L2*Math.cos(q2));const x1=ox+s*L1*Math.cos(q1),y1=oy-s*L1*Math.sin(q1);const x2=x1+s*L2*Math.cos(q1+q2),y2=y1-s*L2*Math.sin(q1+q2);rctx.strokeStyle='#54e5a7';rctx.lineWidth=10;rctx.beginPath();rctx.moveTo(ox,oy);rctx.lineTo(x1,y1);rctx.lineTo(x2,y2);rctx.stroke();rctx.fillStyle='#168eea';[ [ox,oy],[x1,y1],[x2,y2] ].forEach(p=>{rctx.beginPath();rctx.arc(p[0],p[1],10,0,Math.PI*2);rctx.fill()});document.getElementById('robotX').textContent=robot.x.toFixed(2);document.getElementById('robotY').textContent=robot.y.toFixed(2);document.getElementById('robotErr').textContent=Math.hypot(robot.tx-robot.x,robot.ty-robot.y).toFixed(3);requestAnimationFrame(rloop)}requestAnimationFrame(rloop);document.querySelectorAll('.robotTarget').forEach(b=>b.onclick=()=>{robot.tx=Number(b.dataset.x);robot.ty=Number(b.dataset.y)});
+const rc=document.getElementById('robotCanvas'),rctx=rc.getContext('2d');
+let robot={x:.2,y:.6,tx:.2,ty:.6};
+function setRobotTarget(x,y){
+  x=Number(x);y=Number(y);if(!Number.isFinite(x)||!Number.isFinite(y))return;
+  const maxR=.69,r=Math.hypot(x,y);let limited=false;
+  if(r>maxR){const scale=maxR/r;x*=scale;y*=scale;limited=true;}
+  robot.tx=x;robot.ty=y;
+  document.getElementById('robotTargetX').value=x.toFixed(2);
+  document.getElementById('robotTargetY').value=y.toFixed(2);
+  document.getElementById('robotTargetReadout').textContent='['+x.toFixed(2)+', '+y.toFixed(2)+']';
+  document.getElementById('robotTargetNote').textContent=limited?'Target was outside reach and was limited to the nearest reachable point.':'Reachable radius: approximately 0.70 m.';
+}
+function rloop(){
+  robot.x+=(robot.tx-robot.x)*.06;robot.y+=(robot.ty-robot.y)*.06;
+  const {w,h,d}=sizeCanvas(rc);rctx.setTransform(d,0,0,d,0,0);rctx.clearRect(0,0,w,h);
+  rctx.fillStyle='#071622';rctx.fillRect(0,0,w,h);rctx.strokeStyle='#24475e';rctx.lineWidth=1;
+  for(let gx=0;gx<w;gx+=30){rctx.beginPath();rctx.moveTo(gx,0);rctx.lineTo(gx,h);rctx.stroke()}
+  for(let gy=0;gy<h;gy+=30){rctx.beginPath();rctx.moveTo(0,gy);rctx.lineTo(w,gy);rctx.stroke()}
+  const ox=w/2,oy=h*.78,s=Math.min(250,w*.32,h*.72),L1=.38,L2=.32,x=robot.x,y=robot.y;
+  const r=Math.min(Math.hypot(x,y),L1+L2-.001),c2=Math.max(-1,Math.min(1,(r*r-L1*L1-L2*L2)/(2*L1*L2))),q2=Math.acos(c2);
+  const q1=Math.atan2(y,x)-Math.atan2(L2*Math.sin(q2),L1+L2*Math.cos(q2));
+  const x1=ox+s*L1*Math.cos(q1),y1=oy-s*L1*Math.sin(q1),x2=x1+s*L2*Math.cos(q1+q2),y2=y1-s*L2*Math.sin(q1+q2);
+  rctx.strokeStyle='#54e5a7';rctx.lineWidth=9;rctx.beginPath();rctx.moveTo(ox,oy);rctx.lineTo(x1,y1);rctx.lineTo(x2,y2);rctx.stroke();
+  rctx.fillStyle='#168eea';[[ox,oy],[x1,y1],[x2,y2]].forEach(p=>{rctx.beginPath();rctx.arc(p[0],p[1],9,0,Math.PI*2);rctx.fill()});
+  const tx=ox+s*robot.tx,ty=oy-s*robot.ty;rctx.strokeStyle='#f5bc58';rctx.lineWidth=2;rctx.beginPath();rctx.arc(tx,ty,10,0,Math.PI*2);rctx.stroke();
+  const err=Math.hypot(robot.tx-robot.x,robot.ty-robot.y);
+  document.getElementById('robotX').textContent=robot.x.toFixed(3);document.getElementById('robotY').textContent=robot.y.toFixed(3);
+  document.getElementById('robotErr').textContent=err.toFixed(3);document.getElementById('robotStatus').textContent=err<.005?'Target reached':'Tracking target';
+  requestAnimationFrame(rloop)
+}
+requestAnimationFrame(rloop);
+document.querySelectorAll('.robotTarget').forEach(b=>b.onclick=()=>setRobotTarget(b.dataset.x,b.dataset.y));
+document.getElementById('applyRobotTarget').onclick=()=>setRobotTarget(document.getElementById('robotTargetX').value,document.getElementById('robotTargetY').value);
+document.getElementById('resetRobotTarget').onclick=()=>setRobotTarget(.20,.60);
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=2"></script><script src="course-engine.js?v=4"></script></body></html>
+<script src="course-content.js?v=2"></script><script src="course-engine.js?v=5"></script></body></html>

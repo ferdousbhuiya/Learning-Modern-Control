@@ -1,5 +1,5 @@
 (() => {
-  if (!window.MC || !Array.isArray(MC.stages)) return;
+  if (typeof MC === 'undefined' || !Array.isArray(MC.stages)) return;
 
   const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
   const KEY='learningModernControlProgressV1';

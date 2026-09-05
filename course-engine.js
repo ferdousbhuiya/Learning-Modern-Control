@@ -1,0 +1,71 @@
+(() => {
+  if (!window.MC || !Array.isArray(MC.stages)) return;
+
+  const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const KEY='learningModernControlProgressV1';
+  let progress={completed:{},last:{stage:0,lesson:0}};
+  try{progress={...progress,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(_){}
+  const save=()=>localStorage.setItem(KEY,JSON.stringify(progress));
+  const key=(s,l)=>s+'-'+l;
+  const isDone=(s,l)=>!!progress.completed[key(s,l)];
+  const stageDone=s=>s.lessons.filter((_,i)=>isDone(s.id,i)).length;
+  const pct=(a,b)=>b?Math.round(a/b*100):0;
+
+  function injectStyle(){
+    const s=document.createElement('style');s.id='preStitchCourseStyles';s.textContent=`
+      .mc13-wrap{max-width:1440px;margin:0 auto;padding:32px}
+      .mc13-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:20px}
+      .mc13-head small{font-size:10px;letter-spacing:.12em;font-weight:800;color:#005db7}.mc13-head h2{font-size:30px;line-height:1.1;margin:5px 0;color:#17233a}.mc13-head p{max-width:800px;font-size:13px;color:#5c6472}
+      .mc13-progress{min-width:220px}.mc13-progress b{float:right}.mc13-bar{height:7px;background:#e2e8f1;border-radius:99px;overflow:hidden;clear:both;margin-top:6px}.mc13-bar i{display:block;height:100%;background:#006c4b}
+      .mc13-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.mc13-card{border:1px solid #dce2eb;background:white;border-radius:13px;padding:18px;text-align:left;box-shadow:0 4px 14px rgba(25,49,80,.05);cursor:pointer}.mc13-card:nth-child(4n+1){border-top:4px solid #267ed1}.mc13-card:nth-child(4n+2){border-top:4px solid #20a273}.mc13-card:nth-child(4n+3){border-top:4px solid #8b69d8}.mc13-card:nth-child(4n+4){border-top:4px solid #e6a33a}.mc13-card h3{font-size:16px;margin:9px 0 6px;color:#18243b}.mc13-card p{font-size:12px;color:#626a78;line-height:1.55}.mc13-card .meta{display:flex;justify-content:space-between;font-size:10px;color:#4f5c70}.mc13-card .mini{height:5px;background:#edf1f6;border-radius:99px;overflow:hidden;margin-top:12px}.mc13-card .mini i{display:block;height:100%;background:#006c4b}
+      .mc-course-overlay{position:fixed;inset:0;z-index:5000;background:#f6f8fc;overflow:auto}.mc-course-top{position:sticky;top:0;z-index:2;height:64px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:0 20px;background:white;border-bottom:1px solid #dfe5ee}.mc-course-top button{border:1px solid #cad5e1;background:#f6f9fc;border-radius:8px;padding:9px 12px;font-weight:700}.mc-course-top div{text-align:center}.mc-course-top strong{display:block}.mc-course-top small{font-size:10px;color:#6b7482}
+      .mc-stage-shell{max-width:1380px;margin:0 auto;padding:22px;display:grid;grid-template-columns:280px 1fr;gap:18px}.mc-stage-side,.mc-stage-main{background:white;border:1px solid #dde4ec;border-radius:12px}.mc-stage-side{padding:13px;height:calc(100vh - 108px);position:sticky;top:84px;overflow:auto}.mc-stage-side h2{font-size:18px}.mc-stage-side p{font-size:11px;color:#67707c}.mc-lessons{display:grid;gap:6px;margin-top:12px}.mc-lessons button{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;border:1px solid #e0e6ed;background:#f9fbfd;border-radius:8px;padding:9px;text-align:left}.mc-lessons button span{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#e8f1fb;font-size:10px}.mc-lessons button b{font-size:10px}.mc-lessons em{font-style:normal;color:#087b57}
+      .mc-stage-main{padding:24px}.mc-stage-main h1{font-size:32px;margin:5px 0}.mc-stage-main>p{font-size:13px;color:#616c7b}.mc-stage-main .start{margin-top:18px;border:0;background:#005db7;color:white;border-radius:8px;padding:11px 14px;font-weight:800}
+      .mc-lesson-shell{max-width:1350px;margin:0 auto;padding:22px;display:grid;grid-template-columns:240px 1fr;gap:16px}.mc-lesson-side{background:white;border:1px solid #dde4ec;border-radius:12px;padding:12px;height:calc(100vh - 108px);position:sticky;top:84px;overflow:auto}.mc-lesson-side button{width:100%;border:0;background:transparent;border-radius:7px;padding:8px;text-align:left;font-size:10px}.mc-lesson-side button.active,.mc-lesson-side button:hover{background:#eaf2ff}
+      .mc-doc{min-width:0}.mc-title,.mc-sec{background:white;border:1px solid #dde4ec;border-radius:12px;padding:20px;margin-bottom:10px}.mc-title h1{font-size:28px;margin:6px 0}.mc-title p,.mc-sec p,.mc-sec li{font-size:12px;color:#4f5e70;line-height:1.65}.mc-sec h2{font-size:17px;margin:4px 0 8px}.mc-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#005db7;font-weight:800}.mc-sec.math{background:#eef6ff}.mc-sec.example{background:#eef9f3}.mc-sec.practice{background:#f0faf5}.mc-sec.debug{background:#fff8e9}.mc-sec.real{background:#f6f1ff}.mc-sec.matlab{background:#edf8fa}.mc-sec pre{white-space:pre-wrap;background:#102535;color:#a1efc2;padding:12px;border-radius:8px;font-size:11px;overflow:auto}.mc-eq{font-family:Georgia,serif;font-size:18px!important;color:#17324f!important}
+      .mc-qa details{border:1px solid #dce5ee;border-radius:8px;padding:10px;margin:7px 0;background:#fbfcfe}.mc-quiz button{display:block;width:100%;border:1px solid #d4dee8;background:#f9fbfd;border-radius:8px;padding:10px;margin:6px 0;text-align:left}.mc-quiz button.ok{background:#eaf8f1;border-color:#76c7a4}.mc-quiz button.bad{background:#fff0ee;border-color:#eaa59f}.mc-nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}.mc-nav button{border:1px solid #ccd8e4;background:white;border-radius:8px;padding:10px 14px;font-weight:700}.mc-nav .primary{background:#005db7;color:#fff;border-color:#005db7}
+      @media(max-width:900px){.mc13-grid{grid-template-columns:1fr 1fr}.mc-stage-shell,.mc-lesson-shell{grid-template-columns:1fr}.mc-stage-side,.mc-lesson-side{position:static;height:auto;max-height:300px}}
+      @media(max-width:620px){.mc13-wrap{padding:18px}.mc13-grid{grid-template-columns:1fr}.mc13-head{align-items:start;flex-direction:column}.mc13-progress{width:100%}.mc-course-top{grid-template-columns:auto 1fr}.mc-course-top .home{display:none}}
+    `;document.head.appendChild(s);
+  }
+
+  function renderCurriculum(){
+    const view=$('#view-curriculum'); if(!view)return;
+    const done=Object.values(progress.completed).filter(Boolean).length;
+    const total=MC.stages.reduce((n,s)=>n+s.lessons.length,0);
+    view.innerHTML=`<section class="mc13-wrap"><div class="mc13-head"><div><small>RESTORED PRE-STITCH COURSE CONTENT</small><h2>Complete 13-Stage Modern Control Curriculum</h2><p>This is the full learning content created before the Stitch redesign, now presented inside the new Stitch platform.</p></div><div class="mc13-progress"><span>Overall progress</span><b>${pct(done,total)}%</b><div class="mc13-bar"><i style="width:${pct(done,total)}%"></i></div></div></div><div class="mc13-grid">${MC.stages.map(s=>{const d=stageDone(s);return `<button class="mc13-card" data-mc-stage="${s.id}"><div class="meta"><span>STAGE ${String(s.id).padStart(2,'0')} · ${s.level}</span><span>${d}/${s.lessons.length}</span></div><h3>${s.title}</h3><p>${s.description}</p><div class="mini"><i style="width:${pct(d,s.lessons.length)}%"></i></div></button>`}).join('')}</div></section>`;
+    $$('[data-mc-stage]',view).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.mcStage)));
+  }
+
+  function overlayBase(title,sub,body){
+    let o=$('#mcCourseOverlay'); if(!o){o=document.createElement('div');o.id='mcCourseOverlay';o.className='mc-course-overlay';document.body.appendChild(o)}
+    o.innerHTML=`<header class="mc-course-top"><button data-mc-back>← Back</button><div><strong>${title}</strong><small>${sub}</small></div><button class="home" data-mc-home>Home</button></header>${body}`;
+    document.body.style.overflow='hidden';o.scrollTop=0;return o;
+  }
+  function closeOverlay(){const o=$('#mcCourseOverlay');if(o)o.remove();document.body.style.overflow='';renderCurriculum()}
+  function openStage(id){
+    const s=MC.stages.find(x=>x.id===id);if(!s)return;
+    progress.last={stage:id,lesson:0};save();
+    const o=overlayBase(s.title,`Stage ${id} · ${s.level}`,`<div class="mc-stage-shell"><aside class="mc-stage-side"><small>STAGE ${String(id).padStart(2,'0')}</small><h2>${s.title}</h2><p>${s.description}</p><div class="mc-lessons">${s.lessons.map((l,i)=>`<button data-mc-lesson="${i}"><span>${i+1}</span><b>${l.title}</b><em>${isDone(id,i)?'✓':''}</em></button>`).join('')}</div></aside><main class="mc-stage-main"><small class="mc-label">${s.level} · ${s.lessons.length} lessons</small><h1>${s.title}</h1><p>${s.description}</p><button class="start" data-mc-start>${stageDone(s)?'Continue Stage →':'Start Stage →'}</button></main></div>`);
+    $('[data-mc-back]',o).onclick=closeOverlay;$('[data-mc-home]',o).onclick=closeOverlay;
+    $$('[data-mc-lesson]',o).forEach(b=>b.onclick=()=>openLesson(id,Number(b.dataset.mcLesson)));
+    $('[data-mc-start]',o).onclick=()=>{let i=s.lessons.findIndex((_,i)=>!isDone(id,i));if(i<0)i=0;openLesson(id,i)};
+  }
+  function openLesson(stageId,i){
+    const s=MC.stages.find(x=>x.id===stageId),l=s?.lessons[i];if(!l)return;
+    progress.last={stage:stageId,lesson:i};save();
+    const o=overlayBase(l.title,`Stage ${stageId} · Lesson ${i+1}/${s.lessons.length}`,`<div class="mc-lesson-shell"><aside class="mc-lesson-side">${s.lessons.map((x,j)=>`<button class="${j===i?'active':''}" data-jump="${j}">${isDone(stageId,j)?'✓ ':''}${j+1}. ${x.title}</button>`).join('')}</aside><article class="mc-doc"><section class="mc-title"><span class="mc-label">STAGE ${String(stageId).padStart(2,'0')} · LESSON ${i+1}</span><h1>${l.title}</h1><p>Follow the full sequence: intuition, theory, mathematics, example, practice, debugging, real-world engineering, Q&A, MATLAB, and quiz.</p></section><section class="mc-sec"><span class="mc-label">Intuition</span><h2>Start with the idea</h2><p>${l.intuition}</p></section><section class="mc-sec"><span class="mc-label">Theory</span><h2>What the concept means</h2><p>${l.theory}</p></section><section class="mc-sec math"><span class="mc-label">Mathematics</span><h2>Equation to remember</h2><p class="mc-eq">${l.math}</p></section><section class="mc-sec example"><span class="mc-label">Worked example</span><h2>Follow one example</h2><p>${l.example}</p></section><section class="mc-sec practice"><span class="mc-label">Practice</span><h2>Now do it yourself</h2><p>${l.practice}</p></section><section class="mc-sec debug"><span class="mc-label">Debugging / common mistake</span><h2>Find what goes wrong</h2><p>${l.debug}</p></section><section class="mc-sec real"><span class="mc-label">Real-world engineering problem</span><h2>Why an engineer cares</h2><p>${l.realWorld}</p></section><section class="mc-sec mc-qa"><span class="mc-label">Q&A</span><h2>Check understanding</h2>${l.qa.map(q=>`<details><summary>${q.question}</summary><p>${q.answer}</p></details>`).join('')}</section><section class="mc-sec matlab"><span class="mc-label">MATLAB / Simulink</span><h2>Verify with software</h2><pre>${l.matlab}</pre></section><section class="mc-sec mc-quiz"><span class="mc-label">Quiz</span><h2>${l.check.question}</h2>${l.check.choices.map((x,j)=>`<button data-answer="${j}">${String.fromCharCode(65+j)}. ${x}</button>`).join('')}<p data-feedback>Choose an answer.</p></section><div class="mc-nav"><button data-prev ${i===0?'disabled':''}>← Previous</button><button class="primary" data-next>${isDone(stageId,i)?'Next Lesson →':'Mark Complete & Continue →'}</button></div></article></div>`);
+    $('[data-mc-back]',o).onclick=()=>openStage(stageId);$('[data-mc-home]',o).onclick=closeOverlay;
+    $$('[data-jump]',o).forEach(b=>b.onclick=()=>openLesson(stageId,Number(b.dataset.jump)));
+    $$('[data-answer]',o).forEach(b=>b.onclick=()=>{const j=Number(b.dataset.answer);$$('[data-answer]',o).forEach(x=>x.classList.remove('ok','bad'));b.classList.add(j===l.check.answer?'ok':'bad');if(j!==l.check.answer)$$('[data-answer]',o)[l.check.answer].classList.add('ok');$('[data-feedback]',o).textContent=j===l.check.answer?'Correct. Explain why before continuing.':'Review the related section and try again.'});
+    $('[data-prev]',o).onclick=()=>i>0&&openLesson(stageId,i-1);
+    $('[data-next]',o).onclick=()=>{progress.completed[key(stageId,i)]=true;save();if(i<s.lessons.length-1)openLesson(stageId,i+1);else openStage(stageId)};
+  }
+
+  injectStyle();
+  renderCurriculum();
+  const navResume=document.createElement('button');
+  navResume.textContent='Resume Full Course';navResume.className='px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary text-[11px]';
+  navResume.onclick=()=>openLesson(progress.last.stage||0,progress.last.lesson||0);
+  document.querySelector('header nav')?.appendChild(navResume);
+})();

@@ -65,7 +65,23 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 </main>
 <script>
 const tabs=['curriculum','pendulum','robotics','theory','benchmarks'];
-function switchMainTab(name){tabs.forEach(t=>document.getElementById('view-'+t)?.classList.toggle('active',t===name));document.querySelectorAll('[data-main-tab]').forEach(b=>{if(b.dataset.mainTab===name){b.classList.add('bg-primary','text-on-primary')}else if(b.classList.contains('tab-pill')){b.classList.remove('bg-primary','text-on-primary');b.classList.add('bg-surface-container')}});window.scrollTo({top:100,behavior:'smooth'});}
+function switchMainTab(name){
+  tabs.forEach(t=>document.getElementById('view-'+t)?.classList.toggle('active',t===name));
+  document.querySelectorAll('[data-main-tab]').forEach(b=>{
+    const selected=b.dataset.mainTab===name;
+    b.classList.remove('bg-primary','text-on-primary');
+    if(b.classList.contains('tab-pill')){
+      b.classList.toggle('bg-primary',selected);
+      b.classList.toggle('text-on-primary',selected);
+      b.classList.toggle('bg-surface-container',!selected);
+    }else if(b.classList.contains('nav-link')){
+      b.classList.toggle('bg-primary',selected);
+      b.classList.toggle('text-on-primary',selected);
+      b.classList.toggle('text-on-surface-variant',!selected);
+    }
+  });
+  window.scrollTo({top:100,behavior:'smooth'});
+}
 document.querySelectorAll('[data-main-tab]').forEach(b=>b.addEventListener('click',()=>switchMainTab(b.dataset.mainTab)));
 document.querySelectorAll('[data-tier]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.tier).classList.toggle('open')));
 document.getElementById('expandAll').onclick=()=>document.querySelectorAll('.tier-drawer').forEach(x=>x.classList.add('open'));

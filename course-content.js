@@ -556,3 +556,4 @@ const MC = (() => {
 
   return {stages,courseVideos};
 })();
+if (typeof window !== 'undefined') window.MC = MC;

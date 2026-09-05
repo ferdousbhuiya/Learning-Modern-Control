@@ -29,6 +29,40 @@
     `;document.head.appendChild(s);
   }
 
+  function renderTheoryDocs(){
+    const view=$('#view-theory'); if(!view)return;
+    const formulas=[
+      ['Stage 00','Mathematics Refresher','Matrices, determinants, eigenvalues, differential equations, Laplace transforms.','det(λI-A)=0 · L{ẋ}=sX(s)-x(0)',0],
+      ['Stage 01','Control Systems Foundations','Feedback, open vs closed loop, signals, stability, performance, sampling, block diagrams.','T(s)=G(s)/(1+G(s)H(s))',1],
+      ['Stage 02','Mathematical Modeling','Mass-spring-damper, RLC, DC motor, nonlinear equilibrium, linearization.','m ẍ+b ẋ+kx=f(t)',2],
+      ['Stage 03','Classical Control Refresher','Poles/zeros, steady-state error, second-order response, Routh, root locus, Bode, PID.','Kp, Kv, Ka · Ts≈4/(ζωn)',3],
+      ['Stage 04','State-Space Fundamentals','State variables, A/B/C/D construction, realizations, transfer/state conversion, similarity.','ẋ=Ax+Bu · y=Cx+Du',4],
+      ['Stage 05','State-Space Analysis','Matrix exponential, forced response, modes, Jordan form, minimality.','x(t)=e^{At}x(0)+∫e^{A(t-τ)}Bu(τ)dτ',5],
+      ['Stage 06','Controllability & Observability','Rank tests, PBH tests, decomposition, sensor/actuator placement.','𝒞=[B AB … Aⁿ⁻¹B] · 𝒪=[C;CA;…;CAⁿ⁻¹]',6],
+      ['Stage 07','State Feedback & Pole Placement','Full-state feedback, desired poles, Ackermann, tracking, MIMO pole placement.','u=-Kx+Nr · Acl=A-BK',7],
+      ['Stage 08','State Observers','Luenberger observers, observer error, separation principle, reduced-order observers.','x̂̇=Ax̂+Bu+L(y-Cx̂)',8],
+      ['Stage 09','Stability & Lyapunov Methods','Hurwitz stability, Lyapunov intuition, positive definiteness, continuous/discrete equations.','AᵀP+PA=-Q',9],
+      ['Stage 10','Optimal Control / LQR','Quadratic cost, weight selection, Riccati equation, LQR, LQI.','J=∫(xᵀQx+uᵀRu)dt',10],
+      ['Stage 11','MATLAB & Simulink Labs','Control Toolbox, model conversion, C/O labs, pole placement, observers, LQR, Simulink.','ss · tf · ctrb · obsv · place · lqr',11],
+      ['Stage 12','Advanced Topics & Projects','Digital control, Kalman filtering, MIMO, robustness, MPC, capstone projects.','x[k+1]=Adx[k]+Bdu[k]',12]
+    ];
+    view.innerHTML=`<div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8">
+      <span class="font-label-caps text-label-caps text-primary">THEORY & MATH DOCS</span>
+      <h1 class="font-headline-section text-headline-section mt-2">Complete Modern Control Reference</h1>
+      <p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">This reference now follows the complete 13-stage curriculum. Use it as a compact review, then open the corresponding stage for intuition, derivations, worked examples, practice, debugging, real-world applications, MATLAB, and quizzes.</p>
+      <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-unit-4 mt-6">
+      ${formulas.map(x=>`<article class="bg-white rounded-xl p-unit-5 shadow-sm border border-outline-variant/40">
+        <div class="flex items-center justify-between gap-2"><span class="text-primary text-[10px] font-bold">${x[0]}</span><span class="text-[9px] text-on-surface-variant">${MC.stages[x[4]].lessons.length} lessons</span></div>
+        <h3 class="font-title-card mt-2">${x[1]}</h3>
+        <p class="text-[12px] text-on-surface-variant mt-2">${x[2]}</p>
+        <div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono text-[11px]">${x[3]}</div>
+        <button class="mt-4 px-unit-3 py-unit-2 rounded bg-primary text-on-primary text-[10px] font-bold" data-theory-stage="${x[4]}">Open Full Stage →</button>
+      </article>`).join('')}
+      </div>
+    </div>`;
+    $('[data-theory-stage]',view).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.theoryStage)));
+  }
+
   function renderCurriculum(){
     const view=$('#view-curriculum'); if(!view)return;
     const done=Object.values(progress.completed).filter(Boolean).length;
@@ -62,8 +96,11 @@
     $('[data-next]',o).onclick=()=>{progress.completed[key(stageId,i)]=true;save();if(i<s.lessons.length-1)openLesson(stageId,i+1);else openStage(stageId)};
   }
 
+  window.openModernControlStage=openStage;
+  window.openModernControlLesson=openLesson;
   injectStyle();
   renderCurriculum();
+  renderTheoryDocs();
   const navResume=document.createElement('button');
   navResume.textContent='Resume Full Course';navResume.className='px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary text-[11px]';
   navResume.onclick=()=>openLesson(progress.last.stage||0,progress.last.lesson||0);

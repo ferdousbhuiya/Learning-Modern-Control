@@ -24,12 +24,12 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 <header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
   <div class="h-16 max-w-[1440px] mx-auto px-gutter-desktop flex items-center justify-between gap-unit-4">
     <div class="flex items-center gap-unit-6">
-      <div class="flex items-center gap-unit-3"><div class="w-9 h-9 rounded-lg bg-inverse-surface text-inverse-on-surface flex items-center justify-center font-bold">MC</div><span class="font-title-card text-title-card">Modern Control Learning</span><span class="hidden xl:inline-flex px-unit-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-badge text-label-badge">v1 • Stitch Build</span></div>
+      <div class="flex items-center gap-unit-3"><div class="w-9 h-9 rounded-lg bg-inverse-surface text-inverse-on-surface flex items-center justify-center font-bold">MC</div><span class="font-title-card text-title-card">Modern Control Learning</span></div>
       
     </div>
     <div class="flex items-center gap-unit-2">
       <div class="hidden sm:flex items-center gap-unit-2 px-unit-3 py-unit-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-code-mono text-code-mono"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span>Control Lab • Ready</span></div>
-      <a href="https://github.com/ferdousbhuiya/Learning-Modern-Control" target="_blank" rel="noopener" class="px-unit-3 py-unit-1 rounded-lg bg-surface-container-low text-on-surface-variant text-[11px]">GitHub</a>
+      
     </div>
   </div>
   </header>
@@ -55,7 +55,60 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
   </div></section>
 </section>
 
-<section id="view-pendulum" class="tab-view"><div class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-8 grid lg:grid-cols-[280px_1fr] gap-unit-6"><aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">INVERTED PENDULUM</span><h2 class="font-headline-modal text-headline-modal mt-2">LQR / Pole Placement</h2><label class="block mt-5 text-[11px]">Controller Mode</label><div class="grid grid-cols-2 gap-unit-2 mt-2"><button id="ctrlLqr" class="p-unit-3 rounded bg-primary text-on-primary">LQR</button><button id="ctrlPole" class="p-unit-3 rounded bg-surface-container">Pole</button></div><label class="block mt-5 text-[11px]">Impulse Force</label><input id="impulseSlider" type="range" min="-20" max="20" value="8" class="w-full mt-2"/><button id="applyImpulse" class="w-full mt-3 px-unit-3 py-unit-2 rounded bg-surface-container-high">Apply Impulse</button><button id="resetPendulum" class="w-full mt-2 px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary">Reset</button></aside><section class="bg-white rounded-xl p-unit-5 shadow-md"><div class="flex items-center justify-between"><div><span class="font-label-caps text-label-caps text-primary">SIMULATION VIEWPORT</span><h2 class="font-headline-modal text-headline-modal">Cart-Pole State Response</h2></div><div id="pendulumStatus" class="text-secondary text-[11px]">Controller: LQR</div></div><div class="canvas-dark rounded-xl h-[420px] mt-4 relative overflow-hidden"><canvas id="pendulumCanvas" class="w-full h-full"></canvas></div><div class="grid grid-cols-4 gap-unit-2 mt-4 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Cart x</div><div id="statX" class="font-bold">0.00 m</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Angle θ</div><div id="statTheta" class="font-bold">0.00°</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Control u</div><div id="statU" class="font-bold">0.00 N</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">State</div><div id="statStable" class="font-bold text-secondary">Stable</div></div></div></section></div></section>
+<section id="view-pendulum" class="tab-view">
+<div class="max-w-[1320px] mx-auto px-gutter-desktop py-unit-5">
+  <div class="mb-4">
+    <span class="font-label-caps text-label-caps text-primary">INTERACTIVE CONTROL LAB</span>
+    <h1 class="font-headline-section text-headline-section mt-1">Inverted Pendulum: LQR vs Pole Placement</h1>
+    <p class="text-[12px] text-on-surface-variant mt-2 max-w-5xl">Purpose: stabilize an unstable cart-pole system after a disturbance. Choose a controller, apply an impulse, and observe how feedback drives cart position and pendulum angle back toward equilibrium. The experiment connects state-feedback gains to stability, recovery speed, control effort, and robustness.</p>
+  </div>
+  <div class="grid xl:grid-cols-[250px_minmax(0,1fr)_310px] gap-unit-4 items-start">
+    <aside class="bg-white rounded-xl p-unit-4 shadow-md">
+      <h2 class="font-title-card">1. Choose the controller</h2>
+      <p class="text-[10px] text-on-surface-variant mt-1">Compare two state-feedback gain sets.</p>
+      <div class="grid grid-cols-2 gap-unit-2 mt-3">
+        <button id="ctrlLqr" class="p-unit-3 rounded bg-primary text-on-primary">LQR</button>
+        <button id="ctrlPole" class="p-unit-3 rounded bg-surface-container">Pole</button>
+      </div>
+      <div class="mt-4 p-unit-3 rounded bg-surface-container-low">
+        <div class="text-[9px] uppercase text-on-surface-variant">Current feedback gain K</div>
+        <div id="gainReadout" class="font-code-mono text-[10px] mt-2">[2.5, 3.5, -23, -5.5]</div>
+        <p class="text-[9px] text-on-surface-variant mt-2">K multiplies the state vector [x, ẋ, θ, θ̇]. Larger or differently balanced gains change how strongly the controller reacts to each state.</p>
+      </div>
+      <label class="block mt-4 text-[11px]">Impulse Force</label>
+      <input id="impulseSlider" type="range" min="-20" max="20" value="8" class="w-full mt-2"/>
+      <button id="applyImpulse" class="w-full mt-3 px-unit-3 py-unit-2 rounded bg-surface-container-high">Apply Impulse</button>
+      <button id="resetPendulum" class="w-full mt-2 px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary">Reset</button>
+    </aside>
+    <section class="bg-white rounded-xl p-unit-4 shadow-md">
+      <div class="flex items-center justify-between"><strong class="text-[11px]">2. Observe recovery</strong><div id="pendulumStatus" class="text-secondary text-[10px]">Controller: LQR</div></div>
+      <div class="canvas-dark rounded-xl h-[390px] mt-3 relative overflow-hidden"><canvas id="pendulumCanvas" class="w-full h-full"></canvas></div>
+      <div class="grid grid-cols-4 gap-unit-2 mt-3 text-center">
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Cart x</div><div id="statX" class="font-bold">0.00 m</div></div>
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Angle θ</div><div id="statTheta" class="font-bold">0.00°</div></div>
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Control u</div><div id="statU" class="font-bold">0.00 N</div></div>
+        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">State</div><div id="statStable" class="font-bold text-secondary">Stable</div></div>
+      </div>
+    </section>
+    <aside class="grid gap-unit-3">
+      <section class="bg-white rounded-xl p-unit-4 shadow-md">
+        <h2 class="font-title-card">What are we learning?</h2>
+        <ol class="mt-2 pl-4 list-decimal text-[11px] text-on-surface-variant space-y-2">
+          <li><b>Unstable dynamics:</b> the upright pendulum naturally falls without feedback.</li>
+          <li><b>State feedback:</b> the controller uses x, ẋ, θ, and θ̇ to compute force u.</li>
+          <li><b>Gain design:</b> LQR chooses gains from a cost tradeoff; pole placement chooses gains to achieve desired closed-loop poles.</li>
+          <li><b>Disturbance rejection:</b> an impulse tests whether the controller can recover.</li>
+          <li><b>Performance:</b> compare settling, angle recovery, cart travel, and control effort.</li>
+        </ol>
+      </section>
+      <section class="bg-primary-fixed rounded-xl p-unit-4">
+        <h2 class="font-title-card">Goal of the lab</h2>
+        <p class="text-[11px] mt-2">By the end, you should be able to explain <b>state → feedback gain K → control force → closed-loop response</b>, and describe why different gain designs can stabilize the same plant with different performance.</p>
+      </section>
+    </aside>
+  </div>
+</div>
+</section>
 
 <section id="view-robotics" class="tab-view">
 <div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-5">
@@ -164,12 +217,14 @@ function setController(mode){
   document.getElementById('pendulumStatus').textContent=mode==='lqr'?'Controller: LQR':'Controller: Pole Placement';
   document.getElementById('ctrlLqr').classList.toggle('mc-active',mode==='lqr');
   document.getElementById('ctrlPole').classList.toggle('mc-active',mode==='pole');
+  const K=mode==='lqr'?[2.5,3.5,-23,-5.5]:[2.0,3.0,-20,-5.0];
+  const g=document.getElementById('gainReadout'); if(g) g.textContent='['+K.join(', ')+']';
 }
 document.getElementById('ctrlLqr').onclick=()=>setController('lqr');
 document.getElementById('ctrlPole').onclick=()=>setController('pole');
 document.getElementById('applyImpulse').onclick=()=>{pend.xd+=Number(document.getElementById('impulseSlider').value)/12};
 document.getElementById('resetPendulum').onclick=resetPendulum;
-document.getElementById('globalReset').onclick=resetPendulum;
+document.getElementById('globalReset')?.addEventListener('click',resetPendulum);
 setController('lqr');
 
 const rc=document.getElementById('robotCanvas'),rctx=rc.getContext('2d');
@@ -211,4 +266,4 @@ document.getElementById('resetRobotTarget').onclick=()=>setRobotTarget(.20,.60);
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=6"></script><script src="course-engine.js?v=6"></script></body></html>
+<script src="course-content.js?v=7"></script><script src="course-engine.js?v=7"></script></body></html>

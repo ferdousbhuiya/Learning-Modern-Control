@@ -25,21 +25,15 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
   <div class="h-16 max-w-[1440px] mx-auto px-gutter-desktop flex items-center justify-between gap-unit-4">
     <div class="flex items-center gap-unit-6">
       <div class="flex items-center gap-unit-3"><div class="w-9 h-9 rounded-lg bg-inverse-surface text-inverse-on-surface flex items-center justify-center font-bold">MC</div><span class="font-title-card text-title-card">Modern Control Learning</span><span class="hidden xl:inline-flex px-unit-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-badge text-label-badge">v1 • Stitch Build</span></div>
-      <nav class="hidden lg:flex items-center gap-unit-1">
-        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="curriculum">Curriculum & Modules</button>
-        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="pendulum">Simulation Lab</button>
-        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="theory">State-Space & Math Docs</button>
-        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="benchmarks">Benchmarks & Problem Sets</button>
-      </nav>
+      
     </div>
     <div class="flex items-center gap-unit-2">
       <div class="hidden sm:flex items-center gap-unit-2 px-unit-3 py-unit-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-code-mono text-code-mono"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span>Control Lab • Ready</span></div>
       <a href="https://github.com/ferdousbhuiya/Learning-Modern-Control" target="_blank" rel="noopener" class="px-unit-3 py-unit-1 rounded-lg bg-surface-container-low text-on-surface-variant text-[11px]">GitHub</a>
     </div>
   </div>
-  <div class="w-full bg-surface-container-lowest/90"><div class="h-10 max-w-[1440px] mx-auto px-gutter-desktop flex items-center justify-between text-[11px]"><div class="flex items-center gap-unit-2 text-on-surface-variant"><span class="material-symbols-outlined text-[14px]">account_tree</span><span>LTI Systems</span><span>/</span><span>State-Space Matrix</span><span>/</span><span class="text-primary font-bold">Kalman Controllability Gramian</span></div><div class="flex items-center gap-unit-2"><button class="px-unit-3 py-1 rounded bg-primary text-on-primary" data-main-tab="pendulum">Run Pole Placement</button><button class="px-unit-2 py-1 rounded bg-surface-container-high" id="globalReset">Reset State</button></div></div></div>
-</header>
-<main class="pt-[104px]">
+  </header>
+<main class="pt-[64px]">
 <section class="bg-surface-container-low py-unit-3"><div class="max-w-[1440px] mx-auto px-gutter-desktop flex flex-wrap gap-unit-2">
 <button class="tab-pill bg-primary text-on-primary px-unit-4 py-unit-2 rounded-lg" data-main-tab="curriculum">Curriculum Ladder</button>
 <button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="pendulum">Inverted Pendulum Lab</button>
@@ -64,47 +58,62 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 <section id="view-pendulum" class="tab-view"><div class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-8 grid lg:grid-cols-[280px_1fr] gap-unit-6"><aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">INVERTED PENDULUM</span><h2 class="font-headline-modal text-headline-modal mt-2">LQR / Pole Placement</h2><label class="block mt-5 text-[11px]">Controller Mode</label><div class="grid grid-cols-2 gap-unit-2 mt-2"><button id="ctrlLqr" class="p-unit-3 rounded bg-primary text-on-primary">LQR</button><button id="ctrlPole" class="p-unit-3 rounded bg-surface-container">Pole</button></div><label class="block mt-5 text-[11px]">Impulse Force</label><input id="impulseSlider" type="range" min="-20" max="20" value="8" class="w-full mt-2"/><button id="applyImpulse" class="w-full mt-3 px-unit-3 py-unit-2 rounded bg-surface-container-high">Apply Impulse</button><button id="resetPendulum" class="w-full mt-2 px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary">Reset</button></aside><section class="bg-white rounded-xl p-unit-5 shadow-md"><div class="flex items-center justify-between"><div><span class="font-label-caps text-label-caps text-primary">SIMULATION VIEWPORT</span><h2 class="font-headline-modal text-headline-modal">Cart-Pole State Response</h2></div><div id="pendulumStatus" class="text-secondary text-[11px]">Controller: LQR</div></div><div class="canvas-dark rounded-xl h-[420px] mt-4 relative overflow-hidden"><canvas id="pendulumCanvas" class="w-full h-full"></canvas></div><div class="grid grid-cols-4 gap-unit-2 mt-4 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Cart x</div><div id="statX" class="font-bold">0.00 m</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Angle θ</div><div id="statTheta" class="font-bold">0.00°</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Control u</div><div id="statU" class="font-bold">0.00 N</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">State</div><div id="statStable" class="font-bold text-secondary">Stable</div></div></div></section></div></section>
 
 <section id="view-robotics" class="tab-view">
-  <div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-5 grid lg:grid-cols-[300px_1fr] gap-unit-4">
+<div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-5">
+  <div class="mb-4">
+    <span class="font-label-caps text-label-caps text-primary">ROBOTICS COMPUTATIONAL LAB</span>
+    <h1 class="font-headline-section text-headline-section mt-1">Two-Link Robot: Inverse Kinematics & Tracking</h1>
+    <p class="text-[12px] text-on-surface-variant mt-2 max-w-5xl">Purpose: learn how a desired Cartesian position (X,Y) becomes joint motion. You choose a target, inverse kinematics determines a feasible arm configuration, and the simulated controller moves the end effector toward it. Compare the requested target, actual position, and tracking error to understand reachability, convergence, and closed-loop tracking.</p>
+  </div>
+  <div class="grid lg:grid-cols-[250px_430px_1fr] gap-unit-4 items-start">
     <aside class="bg-white rounded-xl p-unit-4 shadow-md">
-      <span class="font-label-caps text-label-caps text-primary">ROBOTICS COMPUTATIONAL LAB</span>
-      <h2 class="font-headline-modal text-headline-modal mt-2">Computed Torque Control</h2>
-      <p class="text-[11px] text-on-surface-variant mt-2">Choose a preset or enter your own reachable X/Y target. The arm moves to the target and the result panel reports position and tracking error.</p>
-      <div class="grid gap-unit-2 mt-4">
-        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.45" data-y="0.35">Target A [0.45, 0.35]</button>
-        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="-0.35" data-y="0.40">Target B [-0.35, 0.40]</button>
-        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.20" data-y="0.60">Target C [0.20, 0.60]</button>
+      <h2 class="font-title-card">1. Choose a target</h2>
+      <p class="text-[10px] text-on-surface-variant mt-1">Use a preset or enter your own X and Y coordinates.</p>
+      <div class="grid gap-unit-2 mt-3">
+        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.45" data-y="0.35">A [0.45, 0.35]</button>
+        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="-0.35" data-y="0.40">B [-0.35, 0.40]</button>
+        <button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.20" data-y="0.60">C [0.20, 0.60]</button>
       </div>
       <div class="mt-4 p-unit-3 rounded-lg bg-surface-container-low border border-outline-variant/50">
-        <div class="font-title-sub text-title-sub">Custom Target</div>
-        <div class="grid grid-cols-2 gap-unit-2 mt-3">
-          <label class="text-[10px]">X position
-            <input id="robotTargetX" type="number" min="-0.68" max="0.68" step="0.05" value="0.20" class="mt-1 w-full px-unit-2 py-unit-2 rounded border border-outline-variant bg-white"/>
-          </label>
-          <label class="text-[10px]">Y position
-            <input id="robotTargetY" type="number" min="-0.68" max="0.68" step="0.05" value="0.60" class="mt-1 w-full px-unit-2 py-unit-2 rounded border border-outline-variant bg-white"/>
-          </label>
+        <div class="grid grid-cols-2 gap-unit-2">
+          <label class="text-[10px]">X (m)<input id="robotTargetX" type="number" min="-0.68" max="0.68" step="0.05" value="0.20" class="mt-1 w-full px-unit-2 py-unit-2 rounded border border-outline-variant bg-white"/></label>
+          <label class="text-[10px]">Y (m)<input id="robotTargetY" type="number" min="-0.68" max="0.68" step="0.05" value="0.60" class="mt-1 w-full px-unit-2 py-unit-2 rounded border border-outline-variant bg-white"/></label>
         </div>
-        <div class="grid grid-cols-2 gap-unit-2 mt-3">
-          <button id="applyRobotTarget" class="px-unit-3 py-unit-2 rounded bg-primary text-on-primary font-bold text-[10px]">Apply X / Y</button>
-          <button id="resetRobotTarget" class="px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary font-bold text-[10px]">Reset</button>
-        </div>
-        <p id="robotTargetNote" class="text-[9px] text-on-surface-variant mt-2">Reachable radius: approximately 0.70 m.</p>
+        <button id="applyRobotTarget" class="w-full mt-3 px-unit-3 py-unit-2 rounded bg-primary text-on-primary font-bold text-[10px]">Move to X / Y</button>
+        <button id="resetRobotTarget" class="w-full mt-2 px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary font-bold text-[10px]">Reset</button>
+        <p id="robotTargetNote" class="text-[9px] text-on-surface-variant mt-2">Maximum reach is approximately 0.70 m from the base.</p>
       </div>
     </aside>
-    <section class="bg-white rounded-xl p-unit-4 shadow-md">
-      <div class="flex items-center justify-between gap-3">
-        <div><span class="font-label-caps text-label-caps text-primary">ROBOT VIEWPORT</span><h2 class="font-title-card text-title-card mt-1">Two-Link Arm Tracking</h2></div>
-        <div id="robotStatus" class="text-secondary text-[10px]">Tracking target</div>
-      </div>
-      <div class="canvas-dark rounded-xl h-[300px] mt-3 relative overflow-hidden"><canvas id="robotCanvas" class="w-full h-full"></canvas></div>
-      <div class="grid grid-cols-4 gap-unit-2 mt-3 text-center">
-        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector X</div><div id="robotX" class="font-bold">0.20</div></div>
-        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector Y</div><div id="robotY" class="font-bold">0.60</div></div>
-        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Target</div><div id="robotTargetReadout" class="font-bold">[0.20, 0.60]</div></div>
-        <div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Tracking Error</div><div id="robotErr" class="font-bold text-secondary">0.000</div></div>
-      </div>
+    <section class="bg-white rounded-xl p-unit-3 shadow-md">
+      <div class="flex justify-between items-center mb-2"><strong class="text-[11px]">2. Observe the arm</strong><span id="robotStatus" class="text-secondary text-[10px]">Tracking target</span></div>
+      <div class="canvas-dark rounded-xl h-[520px] relative overflow-hidden"><canvas id="robotCanvas" class="w-full h-full"></canvas></div>
     </section>
+    <aside class="grid gap-unit-3">
+      <section class="bg-white rounded-xl p-unit-4 shadow-md">
+        <h2 class="font-title-card">3. Read the result</h2>
+        <div class="grid grid-cols-2 gap-unit-2 mt-3 text-center">
+          <div class="bg-surface-container p-unit-3 rounded"><div class="text-[9px] uppercase">Actual X</div><div id="robotX" class="font-bold">0.20</div></div>
+          <div class="bg-surface-container p-unit-3 rounded"><div class="text-[9px] uppercase">Actual Y</div><div id="robotY" class="font-bold">0.60</div></div>
+          <div class="bg-surface-container p-unit-3 rounded"><div class="text-[9px] uppercase">Requested target</div><div id="robotTargetReadout" class="font-bold">[0.20, 0.60]</div></div>
+          <div class="bg-surface-container p-unit-3 rounded"><div class="text-[9px] uppercase">Tracking error</div><div id="robotErr" class="font-bold text-secondary">0.000</div></div>
+        </div>
+      </section>
+      <section class="bg-white rounded-xl p-unit-4 shadow-md">
+        <h2 class="font-title-card">What are we learning?</h2>
+        <ol class="mt-2 pl-4 list-decimal text-[11px] text-on-surface-variant space-y-2">
+          <li><b>Coordinate control:</b> specify where the robot hand should go using X and Y.</li>
+          <li><b>Inverse kinematics:</b> convert the target position into joint angles for the two links.</li>
+          <li><b>Reachability:</b> discover that a robot cannot reach points outside its physical workspace.</li>
+          <li><b>Tracking:</b> watch the actual end effector converge toward the requested target.</li>
+          <li><b>Error:</b> use tracking error as a measurable indicator of controller performance.</li>
+        </ol>
+      </section>
+      <section class="bg-primary-fixed rounded-xl p-unit-4">
+        <h2 class="font-title-card">Goal of the lab</h2>
+        <p class="text-[11px] mt-2">By the end, you should be able to explain the chain <b>desired position → inverse kinematics → joint configuration → controlled motion → measured position → tracking error</b>, and relate it to real robotic manipulators.</p>
+      </section>
+    </aside>
   </div>
+</div>
 </section>
 
 <section id="view-theory" class="tab-view"><div class="max-w-[1200px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">THEORY & MATH DOCS</span><h1 class="font-headline-section text-headline-section mt-2">State-Space & Modern Control Reference</h1><div class="grid md:grid-cols-2 gap-unit-4 mt-6"><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">State-Space Form</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">ẋ=Ax+Bu<br/>y=Cx+Du</div><p class="text-[13px] text-on-surface-variant mt-3">A captures internal dynamics, B input influence, C output mapping, and D direct feedthrough.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Controllability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒞=[B AB … Aⁿ⁻¹B]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means the input can influence every state direction.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Observability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒪=[C; CA; …; CAⁿ⁻¹]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means internal states can be reconstructed from outputs over time.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Lyapunov Equation</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">AᵀP+PA=-Q</div><p class="text-[13px] text-on-surface-variant mt-3">For Hurwitz A and Q&gt;0, the positive definite solution P gives a quadratic stability certificate.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">LQR Cost</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">J=∫(xᵀQx+uᵀRu)dt</div><p class="text-[13px] text-on-surface-variant mt-3">Q weights state error; R weights control effort.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Discrete-Time Stability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">x[k+1]=A_dx[k]+B_du[k]</div><p class="text-[13px] text-on-surface-variant mt-3">Stable discrete poles lie strictly inside the unit circle.</p></article></div></div></section>
@@ -181,7 +190,9 @@ function rloop(){
   rctx.fillStyle='#071622';rctx.fillRect(0,0,w,h);rctx.strokeStyle='#24475e';rctx.lineWidth=1;
   for(let gx=0;gx<w;gx+=30){rctx.beginPath();rctx.moveTo(gx,0);rctx.lineTo(gx,h);rctx.stroke()}
   for(let gy=0;gy<h;gy+=30){rctx.beginPath();rctx.moveTo(0,gy);rctx.lineTo(w,gy);rctx.stroke()}
-  const ox=w/2,oy=h*.78,s=Math.min(250,w*.32,h*.72),L1=.38,L2=.32,x=robot.x,y=robot.y;
+  const ox=w/2,oy=h/2,s=Math.min((w-46)/(2*.72),(h-46)/(2*.72)),L1=.38,L2=.32,x=robot.x,y=robot.y;
+  rctx.strokeStyle='#31576d';rctx.lineWidth=1.5;rctx.setLineDash([5,5]);rctx.beginPath();rctx.arc(ox,oy,s*(L1+L2),0,Math.PI*2);rctx.stroke();rctx.setLineDash([]);
+  rctx.strokeStyle='#49697d';rctx.beginPath();rctx.moveTo(ox-s*.72,oy);rctx.lineTo(ox+s*.72,oy);rctx.moveTo(ox,oy-s*.72);rctx.lineTo(ox,oy+s*.72);rctx.stroke();
   const r=Math.min(Math.hypot(x,y),L1+L2-.001),c2=Math.max(-1,Math.min(1,(r*r-L1*L1-L2*L2)/(2*L1*L2))),q2=Math.acos(c2);
   const q1=Math.atan2(y,x)-Math.atan2(L2*Math.sin(q2),L1+L2*Math.cos(q2));
   const x1=ox+s*L1*Math.cos(q1),y1=oy-s*L1*Math.sin(q1),x2=x1+s*L2*Math.cos(q1+q2),y2=y1-s*L2*Math.sin(q1+q2);
@@ -200,4 +211,4 @@ document.getElementById('resetRobotTarget').onclick=()=>setRobotTarget(.20,.60);
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=2"></script><script src="course-engine.js?v=5"></script></body></html>
+<script src="course-content.js?v=6"></script><script src="course-engine.js?v=6"></script></body></html>

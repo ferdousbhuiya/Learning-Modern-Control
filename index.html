@@ -119,4 +119,4 @@ const rc=document.getElementById('robotCanvas'),rctx=rc.getContext('2d');let rob
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=2"></script><script src="course-engine.js?v=3"></script></body></html>
+<script src="course-content.js?v=2"></script><script src="course-engine.js?v=4"></script></body></html>

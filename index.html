@@ -1,132 +1,87 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f7fb">
-  <title>Modern Control Learning</title>
-  <meta name="description" content="A zero-to-advanced Modern Control learning platform with curriculum, simulations, computational labs, theory, problem sets, MATLAB and projects.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260905-4">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Modern Control Computational Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{colors:{secondary:'#006c4b','on-tertiary-fixed-variant':'#00497d','on-secondary-fixed':'#002114','surface-container-highest':'#d7e2ff',outline:'#717785','on-tertiary':'#ffffff','secondary-container':'#7afac2','on-error':'#ffffff','surface-container-high':'#e0e8ff',error:'#ba1a1a','on-primary-fixed':'#001b3d','tertiary-fixed-dim':'#9fcaff','surface-variant':'#d7e2ff','error-container':'#ffdad6','primary-fixed':'#d6e3ff','on-surface-variant':'#414753','on-primary':'#ffffff','surface-tint':'#005db7','secondary-fixed-dim':'#5cdda7','on-primary-container':'#fefcff','inverse-on-surface':'#ecf0ff','surface-bright':'#f9f9ff','surface-container-lowest':'#ffffff','on-tertiary-fixed':'#001d36',surface:'#f9f9ff','on-secondary':'#ffffff',primary:'#005bb3','outline-variant':'#c1c6d6','tertiary-fixed':'#d1e4ff','on-secondary-fixed-variant':'#005138','secondary-fixed':'#7afac2','surface-dim':'#cadaff','on-error-container':'#93000a','inverse-surface':'#15305a','on-primary-fixed-variant':'#00468c',tertiary:'#005fa0','on-tertiary-container':'#fdfcff','inverse-primary':'#a9c7ff','tertiary-container':'#0078c9','on-surface':'#001b3f','on-secondary-container':'#007350','primary-container':'#0073e0',background:'#f9f9ff','surface-container':'#e8eeff','primary-fixed-dim':'#a9c7ff','surface-container-low':'#f1f3ff','on-background':'#001b3f'},borderRadius:{DEFAULT:'0.25rem',lg:'0.5rem',xl:'0.75rem',full:'9999px'},spacing:{'unit-8':'2rem','gutter-mobile':'0.75rem','unit-5':'1.25rem','unit-2':'0.5rem','unit-14':'3.5rem','unit-10':'2.5rem','unit-1':'0.25rem','gutter-desktop':'1.25rem','unit-6':'1.5rem','unit-4':'1rem','unit-3':'0.75rem','container-max':'1440px'},fontFamily:{'code-mono':['Inter'],'title-card':['Inter'],'display-hero':['Inter'],'body-dense':['Inter'],'title-sub':['Inter'],'display-hero-mobile':['Inter'],'headline-section-mobile':['Inter'],'equation-display':['Inter'],'headline-modal':['Inter'],'label-badge':['Inter'],'headline-section':['Inter'],'body-base':['Inter'],'label-caps':['Inter']},fontSize:{'code-mono':['11px',{lineHeight:'16px',fontWeight:'500'}],'title-card':['15px',{lineHeight:'20px',fontWeight:'800'}],'display-hero':['56px',{lineHeight:'60px',fontWeight:'800'}],'body-dense':['11px',{lineHeight:'16px',fontWeight:'500'}],'title-sub':['13px',{lineHeight:'18px',fontWeight:'700'}],'display-hero-mobile':['34px',{lineHeight:'40px',fontWeight:'800'}],'headline-section-mobile':['24px',{lineHeight:'30px',fontWeight:'700'}],'equation-display':['18px',{lineHeight:'26px'}],'headline-modal':['26px',{lineHeight:'32px',fontWeight:'800'}],'label-badge':['11px',{lineHeight:'14px',fontWeight:'700'}],'headline-section':['32px',{lineHeight:'38px',fontWeight:'700'}],'body-base':['14px',{lineHeight:'22px'}],'label-caps':['9px',{lineHeight:'12px',fontWeight:'900'}]}}}};
+</script>
+<style>
+html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,sans-serif}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}.tab-view{display:none}.tab-view.active{display:block}.tier-drawer{display:none}.tier-drawer.open{display:block}.canvas-dark{background:#071622}.problem-option.selected-correct{background:#dff6ec;border-color:#10a978}.problem-option.selected-wrong{background:#fff0ee;border-color:#ba1a1a}
+</style>
 </head>
-<body class="stitch-page">
-  <header class="stitch-topbar">
-    <a class="stitch-brand" href="#home" data-home>
-      <span class="stitch-logo">∿</span>
-      <span><strong>Modern Control</strong><small>AUTONOMOUS SYSTEMS CORE</small></span>
-    </a>
-    <nav class="stitch-nav">
-      <a class="active" href="#roadmap" data-scroll-roadmap>Curriculum</a>
-      <a href="#workspaces" data-platform="simulations">Simulations</a>
-      <a href="#workspaces" data-platform="labs">Computational Labs</a>
-      <a href="#workspaces" data-platform="theory">Theory Docs</a>
-      <a href="#workspaces" data-platform="problems">Problem Sets</a>
-      <a href="#videos">Videos</a>
-    </nav>
-    <button class="stitch-resume" type="button" data-resume>Resume Learning</button>
-    <button class="menu-btn" type="button" aria-label="Open menu" data-menu>☰</button>
-  </header>
+<body class="bg-surface text-on-surface antialiased">
+<header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+  <div class="h-16 max-w-[1440px] mx-auto px-gutter-desktop flex items-center justify-between gap-unit-4">
+    <div class="flex items-center gap-unit-6">
+      <div class="flex items-center gap-unit-3"><div class="w-9 h-9 rounded-lg bg-inverse-surface text-inverse-on-surface flex items-center justify-center font-bold">MC</div><span class="font-title-card text-title-card">Modern Control Learning</span><span class="hidden xl:inline-flex px-unit-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-badge text-label-badge">v1 • Stitch Build</span></div>
+      <nav class="hidden lg:flex items-center gap-unit-1">
+        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="curriculum">Curriculum & Modules</button>
+        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="pendulum">Simulation Lab</button>
+        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="theory">State-Space & Math Docs</button>
+        <button class="nav-link px-unit-3 py-unit-2 rounded text-on-surface-variant" data-main-tab="benchmarks">Benchmarks & Problem Sets</button>
+      </nav>
+    </div>
+    <div class="flex items-center gap-unit-2">
+      <div class="hidden sm:flex items-center gap-unit-2 px-unit-3 py-unit-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-code-mono text-code-mono"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span>Control Lab • Ready</span></div>
+      <a href="https://github.com/ferdousbhuiya/Learning-Modern-Control" target="_blank" rel="noopener" class="px-unit-3 py-unit-1 rounded-lg bg-surface-container-low text-on-surface-variant text-[11px]">GitHub</a>
+    </div>
+  </div>
+  <div class="w-full bg-surface-container-lowest/90"><div class="h-10 max-w-[1440px] mx-auto px-gutter-desktop flex items-center justify-between text-[11px]"><div class="flex items-center gap-unit-2 text-on-surface-variant"><span class="material-symbols-outlined text-[14px]">account_tree</span><span>LTI Systems</span><span>/</span><span>State-Space Matrix</span><span>/</span><span class="text-primary font-bold">Kalman Controllability Gramian</span></div><div class="flex items-center gap-unit-2"><button class="px-unit-3 py-1 rounded bg-primary text-on-primary" data-main-tab="pendulum">Run Pole Placement</button><button class="px-unit-2 py-1 rounded bg-surface-container-high" id="globalReset">Reset State</button></div></div></div>
+</header>
+<main class="pt-[104px]">
+<section class="bg-surface-container-low py-unit-3"><div class="max-w-[1440px] mx-auto px-gutter-desktop flex flex-wrap gap-unit-2">
+<button class="tab-pill bg-primary text-on-primary px-unit-4 py-unit-2 rounded-lg" data-main-tab="curriculum">Curriculum Ladder</button>
+<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="pendulum">Inverted Pendulum Lab</button>
+<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="robotics">Robotics / CTC Lab</button>
+<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="theory">Theory & Math Docs</button>
+<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="benchmarks">Benchmarks</button>
+</div></section>
 
-  <main id="app">
-    <section id="home" class="stitch-status">
-      <span><i></i> Kernel: Ready</span>
-      <span>RK4 / State-Space Solver</span>
-      <span>SimEngine: Connected</span>
-      <button type="button" data-diagnostic>Prerequisite Check</button>
-    </section>
+<section id="view-curriculum" class="tab-view active">
+  <section class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-10 grid grid-cols-1 lg:grid-cols-[1.08fr_.92fr] gap-unit-8 items-center">
+    <div><span class="font-label-caps text-label-caps text-primary uppercase">Modern Control Computational Lab</span><h1 class="font-display-hero text-display-hero max-md:text-[34px] max-md:leading-[40px] mt-unit-2">Zero-to-Advanced Control Systems Mastery</h1><p class="font-body-base text-body-base text-on-surface-variant max-w-3xl mt-unit-4">A rigorous interactive platform for classical control, state-space analysis, controllability, observability, feedback design, observers, Lyapunov stability, LQR, robotics, and computational verification.</p><div class="flex flex-wrap gap-unit-3 mt-unit-5"><button class="px-unit-5 py-unit-3 rounded-lg bg-primary text-on-primary font-title-card" data-main-tab="pendulum">Launch Interactive Lab</button><button class="px-unit-5 py-unit-3 rounded-lg bg-surface-container-high font-title-sub" data-main-tab="robotics">Open Robotics CTC Lab</button></div></div>
+    <div class="rounded-xl bg-surface-container-lowest p-unit-5 shadow-md flex flex-col gap-unit-4"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-primary">LIVE SYSTEM TELEMETRY</span><span class="text-secondary text-[11px]">Stable • Verified</span></div><div class="canvas-dark rounded-lg h-[260px] relative overflow-hidden"><svg viewBox="0 0 520 260" class="absolute inset-0 w-full h-full"><line x1="40" y1="210" x2="480" y2="210" stroke="#385569"/><line x1="260" y1="28" x2="260" y2="230" stroke="#385569"/><path d="M35 202 C100 40 160 55 220 145 S350 190 490 105" fill="none" stroke="#54e5a7" stroke-width="4"/><circle cx="140" cy="40" r="5" fill="#10a978"/><circle cx="280" cy="40" r="4" fill="#005bb3"/></svg></div><div class="grid grid-cols-3 gap-unit-2 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Gramian Rank</div><div class="font-bold text-primary">4 of 4</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Settling Time</div><div class="font-bold text-secondary">1.42 sec</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Overshoot</div><div class="font-bold">&lt; 4.8%</div></div></div></div>
+  </section>
+  <section class="py-unit-8 bg-surface"><div class="max-w-[1440px] mx-auto px-gutter-desktop flex flex-col gap-unit-6"><div class="flex items-end justify-between gap-unit-4"><div><span class="font-label-caps text-label-caps text-primary uppercase">Mastery Hierarchy</span><h2 class="font-headline-section text-headline-section">The Complete 4-Tier Interactive Curriculum</h2><p class="text-on-surface-variant max-w-3xl">Expand any tier to explore theory, equations, derivations, and targeted benchmarks.</p></div><div class="flex gap-unit-2"><button class="px-unit-3 py-1 rounded bg-surface-container" id="expandAll">Expand All</button><button class="px-unit-3 py-1 rounded bg-surface-container" id="collapseAll">Collapse All</button></div></div>
+  <div class="tier-card rounded-xl bg-white shadow-md overflow-hidden"><button class="w-full p-unit-5 flex items-center justify-between bg-surface-container-low text-left" data-tier="tier1"><div><div class="flex gap-unit-2"><span class="px-2 py-0.5 rounded bg-primary text-on-primary text-[11px]">Tier 01</span><span class="px-2 py-0.5 rounded bg-surface-container-highest text-[11px]">Stages 1 & 2</span></div><h3 class="font-headline-modal text-headline-modal mt-1">Foundations & Classical Preliminaries to State-Space</h3><p class="text-[11px] text-on-surface-variant">Differential equations, Laplace transforms, transition matrices, companion forms, and stability.</p></div><span class="material-symbols-outlined">expand_more</span></button><div id="tier1" class="tier-drawer p-unit-6"><div class="grid lg:grid-cols-2 gap-unit-6"><article class="p-unit-5 rounded-xl bg-surface-container-low"><span class="text-primary text-[11px] font-bold">STAGE 01</span><h4 class="font-title-card mt-1">Classical Transfer Function Dynamics</h4><p class="text-[13px] text-on-surface-variant mt-2">Physical models, Laplace transforms, poles, zeros, Routh-Hurwitz, root locus, Bode plots, and margins.</p><div class="p-unit-3 bg-white rounded mt-3 font-code-mono text-code-mono">G(s)=Y(s)/U(s)</div></article><article class="p-unit-5 rounded-xl bg-surface-container-low"><span class="text-primary text-[11px] font-bold">STAGE 02</span><h4 class="font-title-card mt-1">State-Space Canonical Representations</h4><p class="text-[13px] text-on-surface-variant mt-2">State vectors, A/B/C/D matrices, transition matrix, companion form, similarity transforms, and ZOH discretization.</p><div class="p-unit-3 bg-white rounded mt-3 font-code-mono text-code-mono">ẋ=Ax+Bu, y=Cx+Du</div></article></div></div></div>
+  <div class="tier-card rounded-xl bg-white shadow-md overflow-hidden"><button class="w-full p-unit-5 flex items-center justify-between bg-surface-container-low text-left" data-tier="tier2"><div><div class="flex gap-unit-2"><span class="px-2 py-0.5 rounded bg-primary text-on-primary text-[11px]">Tier 02</span><span class="px-2 py-0.5 rounded bg-surface-container-highest text-[11px]">Stages 3 & 4</span></div><h3 class="font-headline-modal text-headline-modal mt-1">Controllability, Observability & Feedback Synthesis</h3><p class="text-[11px] text-on-surface-variant">Rank tests, PBH criteria, pole placement, full-state feedback, and observers.</p></div><span class="material-symbols-outlined">expand_more</span></button><div id="tier2" class="tier-drawer p-unit-6"><div class="grid lg:grid-cols-2 gap-unit-6"><article class="p-unit-5 rounded-xl bg-surface-container-low"><h4 class="font-title-card">Controllability & Observability</h4><p class="text-[13px] text-on-surface-variant mt-2">Kalman matrices, PBH tests, gramians, and sensor/actuator interpretation.</p></article><article class="p-unit-5 rounded-xl bg-surface-container-low"><h4 class="font-title-card">State Feedback & Estimation</h4><p class="text-[13px] text-on-surface-variant mt-2">Pole placement, reference tracking, full-order observers, and separation principle.</p></article></div></div></div>
+  <div class="tier-card rounded-xl bg-white shadow-md overflow-hidden"><button class="w-full p-unit-5 flex items-center justify-between bg-surface-container-low text-left" data-tier="tier3"><div><div class="flex gap-unit-2"><span class="px-2 py-0.5 rounded bg-primary text-on-primary text-[11px]">Tier 03</span><span class="px-2 py-0.5 rounded bg-surface-container-highest text-[11px]">Stages 5 & 6</span></div><h3 class="font-headline-modal text-headline-modal mt-1">Lyapunov Stability & Optimal Control</h3><p class="text-[11px] text-on-surface-variant">Quadratic stability certificates, Riccati equations, LQR, and integral optimal control.</p></div><span class="material-symbols-outlined">expand_more</span></button><div id="tier3" class="tier-drawer p-unit-6"><div class="grid lg:grid-cols-2 gap-unit-6"><article class="p-unit-5 rounded-xl bg-surface-container-low"><h4 class="font-title-card">Lyapunov Methods</h4><p class="text-[13px] text-on-surface-variant mt-2">Positive definiteness, quadratic forms, continuous/discrete Lyapunov equations.</p></article><article class="p-unit-5 rounded-xl bg-surface-container-low"><h4 class="font-title-card">LQR & Riccati Design</h4><p class="text-[13px] text-on-surface-variant mt-2">Cost shaping with Q/R, ARE solution, closed-loop interpretation, and LQI.</p></article></div></div></div>
+  <div class="tier-card rounded-xl bg-white shadow-md overflow-hidden"><button class="w-full p-unit-5 flex items-center justify-between bg-surface-container-low text-left" data-tier="tier4"><div><div class="flex gap-unit-2"><span class="px-2 py-0.5 rounded bg-primary text-on-primary text-[11px]">Tier 04</span><span class="px-2 py-0.5 rounded bg-surface-container-highest text-[11px]">Stages 7 & 8</span></div><h3 class="font-headline-modal text-headline-modal mt-1">Robotics, Digital Control & Advanced Synthesis</h3><p class="text-[11px] text-on-surface-variant">Computed torque control, digital design, Kalman filtering, robustness, and capstone projects.</p></div><span class="material-symbols-outlined">expand_more</span></button><div id="tier4" class="tier-drawer p-unit-6"><div class="grid lg:grid-cols-2 gap-unit-6"><article class="p-unit-5 rounded-xl bg-surface-container-low"><h4 class="font-title-card">Robotics / CTC</h4><p class="text-[13px] text-on-surface-variant mt-2">Nonlinear robot dynamics, inverse dynamics, computed torque control, target tracking.</p></article><article class="p-unit-5 rounded-xl bg-surface-container-low"><h4 class="font-title-card">Advanced Topics</h4><p class="text-[13px] text-on-surface-variant mt-2">Discrete control, Kalman filtering, MIMO interaction, robustness, MPC, and capstone work.</p></article></div></div></div>
+  </div></section>
+</section>
 
-    <section class="stitch-tabs">
-      <a class="active" href="#roadmap" data-scroll-roadmap>▣ Curriculum (00 to 12)</a>
-      <a href="#workspaces" data-platform="simulations">⌁ Interactive Simulation Lab</a>
-      <a href="#workspaces" data-platform="labs">⌘ Computational Labs</a>
-      <a href="#workspaces" data-platform="theory">Σ Theory & Proof Docs</a>
-      <a href="#workspaces" data-platform="problems">☑ Benchmarks & Exams</a>
-    </section>
+<section id="view-pendulum" class="tab-view"><div class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-8 grid lg:grid-cols-[280px_1fr] gap-unit-6"><aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">INVERTED PENDULUM</span><h2 class="font-headline-modal text-headline-modal mt-2">LQR / Pole Placement</h2><label class="block mt-5 text-[11px]">Controller Mode</label><div class="grid grid-cols-2 gap-unit-2 mt-2"><button id="ctrlLqr" class="p-unit-3 rounded bg-primary text-on-primary">LQR</button><button id="ctrlPole" class="p-unit-3 rounded bg-surface-container">Pole</button></div><label class="block mt-5 text-[11px]">Impulse Force</label><input id="impulseSlider" type="range" min="-20" max="20" value="8" class="w-full mt-2"/><button id="applyImpulse" class="w-full mt-3 px-unit-3 py-unit-2 rounded bg-surface-container-high">Apply Impulse</button><button id="resetPendulum" class="w-full mt-2 px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary">Reset</button></aside><section class="bg-white rounded-xl p-unit-5 shadow-md"><div class="flex items-center justify-between"><div><span class="font-label-caps text-label-caps text-primary">SIMULATION VIEWPORT</span><h2 class="font-headline-modal text-headline-modal">Cart-Pole State Response</h2></div><div id="pendulumStatus" class="text-secondary text-[11px]">Controller: LQR</div></div><div class="canvas-dark rounded-xl h-[420px] mt-4 relative overflow-hidden"><canvas id="pendulumCanvas" class="w-full h-full"></canvas></div><div class="grid grid-cols-4 gap-unit-2 mt-4 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Cart x</div><div id="statX" class="font-bold">0.00 m</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Angle θ</div><div id="statTheta" class="font-bold">0.00°</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Control u</div><div id="statU" class="font-bold">0.00 N</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">State</div><div id="statStable" class="font-bold text-secondary">Stable</div></div></div></section></div></section>
 
-    <section class="stitch-landing">
-      <div class="stitch-landing-copy">
-        <div class="stitch-kickers"><span>ZERO-TO-ADVANCED LADDER</span><span>Stages 00 → 12</span></div>
-        <h1>Modern Control & Autonomous Systems Mastery</h1>
-        <p>A rigorous but beginner-friendly engineering roadmap that rebuilds forgotten mathematics and classical control before moving into state-space analysis, controllability, observability, state feedback, observers, Lyapunov stability, LQR, digital control, Kalman filtering, and advanced projects.</p>
-        <div class="stitch-metrics">
-          <span>◇ <b>13 Structured Stages</b></span>
-          <span>⚗ <b id="lessonCount">60+ Lessons</b></span>
-          <span>▤ <b>Practice + MATLAB</b></span>
-          <span>◉ <b>Progress Tracking</b></span>
-        </div>
-      </div>
-      <aside class="stitch-syllabus">
-        <div><small>INTERACTIVE SYLLABUS</small><b>Zero to Advanced</b></div>
-        <p><span>Foundation:</span><strong>Stages 00–03</strong></p>
-        <p><span>Modern Control:</span><strong>Stages 04–10</strong></p>
-        <p><span>Labs & Advanced:</span><strong>Stages 11–12</strong></p>
-        <button type="button" data-platform="simulations">Launch Simulation Sandbox →</button>
-      </aside>
-    </section>
+<section id="view-robotics" class="tab-view"><div class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-8 grid lg:grid-cols-[300px_1fr] gap-unit-6"><aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">ROBOTICS COMPUTATIONAL LAB</span><h2 class="font-headline-modal text-headline-modal mt-2">Computed Torque Control</h2><p class="text-[11px] text-on-surface-variant mt-2">Move the two-link arm between targets and observe inverse kinematics and tracking behavior.</p><div class="grid gap-unit-2 mt-5"><button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="0.45" data-y="0.35">Target A [0.45, 0.35]</button><button class="robotTarget px-unit-3 py-unit-2 rounded bg-surface-container" data-x="-0.35" data-y="0.40">Target B [-0.35, 0.40]</button><button class="robotTarget px-unit-3 py-unit-2 rounded bg-primary text-on-primary" data-x="0.20" data-y="0.60">Target C [0.20, 0.60]</button></div></aside><section class="bg-white rounded-xl p-unit-5 shadow-md"><div class="canvas-dark rounded-xl h-[480px] relative overflow-hidden"><canvas id="robotCanvas" class="w-full h-full"></canvas></div><div class="grid grid-cols-3 gap-unit-2 mt-4 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector X</div><div id="robotX" class="font-bold">0.20</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">End Effector Y</div><div id="robotY" class="font-bold">0.60</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Tracking Error</div><div id="robotErr" class="font-bold text-secondary">0.000</div></div></div></section></div></section>
 
-    <section id="roadmap" class="stitch-roadmap-wrap">
-      <div class="stitch-roadmap-head">
-        <div><small>INTERACTIVE SYLLABUS</small><h2>Your 13-Stage Learning Path</h2><p>Follow the sequence from foundation to expert, or open a stage directly when reviewing.</p></div>
-        <div class="progress-summary"><small>Your progress</small><strong id="overallProgress">0%</strong><div><i id="overallBar"></i></div></div>
-      </div>
-      <div id="stageGrid" class="stage-grid stitch-stage-grid"></div>
-    </section>
+<section id="view-theory" class="tab-view"><div class="max-w-[1200px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">THEORY & MATH DOCS</span><h1 class="font-headline-section text-headline-section mt-2">State-Space & Modern Control Reference</h1><div class="grid md:grid-cols-2 gap-unit-4 mt-6"><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">State-Space Form</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">ẋ=Ax+Bu<br/>y=Cx+Du</div><p class="text-[13px] text-on-surface-variant mt-3">A captures internal dynamics, B input influence, C output mapping, and D direct feedthrough.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Controllability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒞=[B AB … Aⁿ⁻¹B]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means the input can influence every state direction.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Observability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒪=[C; CA; …; CAⁿ⁻¹]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means internal states can be reconstructed from outputs over time.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Lyapunov Equation</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">AᵀP+PA=-Q</div><p class="text-[13px] text-on-surface-variant mt-3">For Hurwitz A and Q&gt;0, the positive definite solution P gives a quadratic stability certificate.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">LQR Cost</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">J=∫(xᵀQx+uᵀRu)dt</div><p class="text-[13px] text-on-surface-variant mt-3">Q weights state error; R weights control effort.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Discrete-Time Stability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">x[k+1]=A_dx[k]+B_du[k]</div><p class="text-[13px] text-on-surface-variant mt-3">Stable discrete poles lie strictly inside the unit circle.</p></article></div></div></section>
 
-    <section id="workspaces" class="stitch-workspaces">
-      <div class="stitch-roadmap-head">
-        <div><small>ENGINEERING WORKBENCH</small><h2>Learn the same topic from several directions.</h2><p>Use curriculum, simulations, computational labs, theory references, and problem sets together.</p></div>
-      </div>
-      <div class="platform-grid">
-        <article><span class="platform-icon">∿</span><div><h3>Interactive Simulation Lab</h3><p>Visualize poles, damping, feedback, state trajectories, controllability, and LQR tradeoffs.</p><button type="button" data-platform="simulations">Open Simulations →</button></div></article>
-        <article><span class="platform-icon">{ }</span><div><h3>Computational Labs</h3><p>MATLAB-focused modeling, state-space, observer, pole-placement, LQR, and digital-control labs.</p><button type="button" data-platform="labs">Open Labs →</button></div></article>
-        <article><span class="platform-icon">Σ</span><div><h3>Theory & Proof Docs</h3><p>Compact mathematical reference for linear algebra, state-space theory, Lyapunov stability, and optimal control.</p><button type="button" data-platform="theory">Open Theory Docs →</button></div></article>
-        <article><span class="platform-icon">✓</span><div><h3>Benchmarks & Problem Sets</h3><p>Course-style questions, debugging practice, exam preparation, and stage-linked problem sets.</p><button type="button" data-platform="problems">Open Problem Sets →</button></div></article>
-      </div>
-    </section>
+<section id="view-benchmarks" class="tab-view"><div class="max-w-[1000px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span><h1 class="font-headline-section text-headline-section mt-2">Self-Study Checkpoints</h1><div class="grid gap-unit-4 mt-6"><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 1 — Stability</h3><p class="mt-2 text-[13px]">Which pole set is asymptotically stable for a continuous-time LTI system?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="1" data-choice="A">A. {-2±3j, -5}</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="1" data-choice="B">B. {+1, -4, -6}</button></div><div id="p1Feedback" class="mt-3 text-[11px]"></div></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 2 — Controllability</h3><p class="mt-2 text-[13px]">For an n-state system, controllability requires rank(𝒞)=?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="2" data-choice="A">A. n</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="2" data-choice="B">B. n-1</button></div><div id="p2Feedback" class="mt-3 text-[11px]"></div></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 3 — Observer Error</h3><p class="mt-2 text-[13px]">Which matrix governs Luenberger observer estimation error?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="3" data-choice="A">A. A-LC</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="3" data-choice="B">B. A-BK</button></div><div id="p3Feedback" class="mt-3 text-[11px]"></div></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Problem 4 — LQR</h3><p class="mt-2 text-[13px]">Increasing R in LQR generally encourages what?</p><div class="grid gap-unit-2 mt-3"><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="4" data-choice="A">A. Less control effort</button><button class="problem-option p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left" data-problem="4" data-choice="B">B. More aggressive input</button></div><div id="p4Feedback" class="mt-3 text-[11px]"></div></article></div></div></section>
+</main>
+<script>
+const tabs=['curriculum','pendulum','robotics','theory','benchmarks'];
+function switchMainTab(name){tabs.forEach(t=>document.getElementById('view-'+t)?.classList.toggle('active',t===name));document.querySelectorAll('[data-main-tab]').forEach(b=>{if(b.dataset.mainTab===name){b.classList.add('bg-primary','text-on-primary')}else if(b.classList.contains('tab-pill')){b.classList.remove('bg-primary','text-on-primary');b.classList.add('bg-surface-container')}});window.scrollTo({top:100,behavior:'smooth'});}
+document.querySelectorAll('[data-main-tab]').forEach(b=>b.addEventListener('click',()=>switchMainTab(b.dataset.mainTab)));
+document.querySelectorAll('[data-tier]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.tier).classList.toggle('open')));
+document.getElementById('expandAll').onclick=()=>document.querySelectorAll('.tier-drawer').forEach(x=>x.classList.add('open'));
+document.getElementById('collapseAll').onclick=()=>document.querySelectorAll('.tier-drawer').forEach(x=>x.classList.remove('open'));
 
-    <section id="videos" class="stitch-videos">
-      <div class="stitch-roadmap-head">
-        <div><small>VISUAL LEARNING</small><h2>Official video resources</h2><p>These links are direct links and work even if the interactive JavaScript is unavailable.</p></div>
-      </div>
-      <div id="videoGrid" class="video-grid">
-        <article class="video-card">
-          <div class="video-thumb"></div>
-          <h3>MathWorks Control Systems Video Series</h3>
-          <p>Feedback, PID, Bode plots, state-space, Kalman filtering, MPC, and more.</p>
-          <a class="video-open" href="https://www.mathworks.com/videos/tech-talks/controls.html" target="_blank" rel="noopener noreferrer">Watch on MathWorks ↗</a>
-        </article>
-        <article class="video-card">
-          <div class="video-thumb"></div>
-          <h3>MathWorks State Space Video Series</h3>
-          <p>State-space intuition, pole placement, controllability, observability, and LQR.</p>
-          <a class="video-open" href="https://www.mathworks.com/videos/series/state-space.html" target="_blank" rel="noopener noreferrer">Watch on MathWorks ↗</a>
-        </article>
-        <article class="video-card">
-          <div class="video-thumb"></div>
-          <h3>State-Space Models in MATLAB</h3>
-          <p>Short practical videos on creating, analyzing, and controlling state-space models.</p>
-          <a class="video-open" href="https://www.mathworks.com/videos/series/state-space-models-100817.html" target="_blank" rel="noopener noreferrer">Watch on MathWorks ↗</a>
-        </article>
-      </div>
-    </section>
+let controller='lqr', pend={x:0,xd:0,th:0.06,thd:0,u:0};
+const pc=document.getElementById('pendulumCanvas'),pctx=pc.getContext('2d');
+function sizeCanvas(c){const r=c.getBoundingClientRect();c.width=Math.max(1,Math.floor(r.width*devicePixelRatio));c.height=Math.max(1,Math.floor(r.height*devicePixelRatio));return {w:r.width,h:r.height,d:devicePixelRatio};}
+function resetPendulum(){pend={x:0,xd:0,th:0.06,thd:0,u:0};}
+function stepPend(dt){const K=controller==='lqr'?[7.5,4.5,34,7.5]:[5.5,3.0,26,5.5];pend.u=-(K[0]*pend.x+K[1]*pend.xd+K[2]*pend.th+K[3]*pend.thd);const xdd=pend.u-0.45*pend.xd+0.8*pend.th;const thdd=9.81*pend.th-0.65*pend.thd-1.8*pend.u;pend.xd+=xdd*dt;pend.x+=pend.xd*dt;pend.thd+=thdd*dt;pend.th+=pend.thd*dt;}
+function drawPend(){const {w,h,d}=sizeCanvas(pc);pctx.setTransform(d,0,0,d,0,0);pctx.clearRect(0,0,w,h);pctx.fillStyle='#071622';pctx.fillRect(0,0,w,h);pctx.strokeStyle='#24475e';for(let i=0;i<w;i+=30){pctx.beginPath();pctx.moveTo(i,0);pctx.lineTo(i,h);pctx.stroke()}for(let j=0;j<h;j+=30){pctx.beginPath();pctx.moveTo(0,j);pctx.lineTo(w,j);pctx.stroke()}const cx=w/2+pend.x*80,cy=h*0.72;pctx.strokeStyle='#8fa8b8';pctx.lineWidth=3;pctx.beginPath();pctx.moveTo(40,cy+35);pctx.lineTo(w-40,cy+35);pctx.stroke();pctx.fillStyle='#168eea';pctx.fillRect(cx-45,cy-18,90,36);const L=120,px=cx+L*Math.sin(pend.th),py=cy-L*Math.cos(pend.th);pctx.strokeStyle='#54e5a7';pctx.lineWidth=7;pctx.beginPath();pctx.moveTo(cx,cy);pctx.lineTo(px,py);pctx.stroke();pctx.fillStyle='#f5bc58';pctx.beginPath();pctx.arc(px,py,13,0,Math.PI*2);pctx.fill();document.getElementById('statX').textContent=pend.x.toFixed(2)+' m';document.getElementById('statTheta').textContent=(pend.th*180/Math.PI).toFixed(2)+'°';document.getElementById('statU').textContent=pend.u.toFixed(2)+' N';const st=Math.abs(pend.th)<0.35;document.getElementById('statStable').textContent=st?'Stable':'Recovering';document.getElementById('statStable').className='font-bold '+(st?'text-secondary':'text-error');}
+let last=performance.now();function loop(t){const dt=Math.min(0.02,(t-last)/1000);last=t;stepPend(dt);drawPend();requestAnimationFrame(loop)}requestAnimationFrame(loop);
+document.getElementById('ctrlLqr').onclick=()=>{controller='lqr';document.getElementById('pendulumStatus').textContent='Controller: LQR'};document.getElementById('ctrlPole').onclick=()=>{controller='pole';document.getElementById('pendulumStatus').textContent='Controller: Pole Placement'};document.getElementById('applyImpulse').onclick=()=>{pend.xd+=Number(document.getElementById('impulseSlider').value)/7};document.getElementById('resetPendulum').onclick=resetPendulum;document.getElementById('globalReset').onclick=resetPendulum;
 
-    <footer class="stitch-footer">
-      <span>Modern Control Learning Initiative</span>
-      <span><i></i> SYSTEM NOMINAL</span>
-      <a href="#roadmap" data-scroll-roadmap>Curriculum</a>
-      <a href="#videos">Video Resources</a>
-    </footer>
-  </main>
+const rc=document.getElementById('robotCanvas'),rctx=rc.getContext('2d');let robot={x:.2,y:.6,tx:.2,ty:.6};function rloop(){robot.x+=(robot.tx-robot.x)*.06;robot.y+=(robot.ty-robot.y)*.06;const {w,h,d}=sizeCanvas(rc);rctx.setTransform(d,0,0,d,0,0);rctx.clearRect(0,0,w,h);rctx.fillStyle='#071622';rctx.fillRect(0,0,w,h);const ox=w/2,oy=h*.78,s=260,L1=.38,L2=.32;const x=robot.x,y=robot.y;const r=Math.min(Math.hypot(x,y),L1+L2-.001);const c2=Math.max(-1,Math.min(1,(r*r-L1*L1-L2*L2)/(2*L1*L2)));const q2=Math.acos(c2);const q1=Math.atan2(y,x)-Math.atan2(L2*Math.sin(q2),L1+L2*Math.cos(q2));const x1=ox+s*L1*Math.cos(q1),y1=oy-s*L1*Math.sin(q1);const x2=x1+s*L2*Math.cos(q1+q2),y2=y1-s*L2*Math.sin(q1+q2);rctx.strokeStyle='#54e5a7';rctx.lineWidth=10;rctx.beginPath();rctx.moveTo(ox,oy);rctx.lineTo(x1,y1);rctx.lineTo(x2,y2);rctx.stroke();rctx.fillStyle='#168eea';[ [ox,oy],[x1,y1],[x2,y2] ].forEach(p=>{rctx.beginPath();rctx.arc(p[0],p[1],10,0,Math.PI*2);rctx.fill()});document.getElementById('robotX').textContent=robot.x.toFixed(2);document.getElementById('robotY').textContent=robot.y.toFixed(2);document.getElementById('robotErr').textContent=Math.hypot(robot.tx-robot.x,robot.ty-robot.y).toFixed(3);requestAnimationFrame(rloop)}requestAnimationFrame(rloop);document.querySelectorAll('.robotTarget').forEach(b=>b.onclick=()=>{robot.tx=Number(b.dataset.x);robot.ty=Number(b.dataset.y)});
 
-  <div id="stageView" class="overlay" hidden></div>
-  <div id="lessonView" class="overlay" hidden></div>
-  <div id="diagnosticView" class="overlay" hidden></div>
-  <div id="platformView" class="overlay" hidden></div>
-  <div id="toast" class="toast" hidden></div>
-
-  <script src="content.js?v=20260905-4"></script>
-  <script src="app.js?v=20260905-4"></script>
-</body>
-</html>
+const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
+</script>
+<script src="course-content.js?v=1"></script><script src="course-engine.js?v=1"></script></body></html>

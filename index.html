@@ -12,6 +12,12 @@ tailwind.config={darkMode:'class',theme:{extend:{colors:{secondary:'#006c4b','on
 </script>
 <style>
 html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,sans-serif}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}.tab-view{display:none}.tab-view.active{display:block}.tier-drawer{display:none}.tier-drawer.open{display:block}.canvas-dark{background:#071622}.problem-option.selected-correct{background:#dff6ec;border-color:#10a978}.problem-option.selected-wrong{background:#fff0ee;border-color:#ba1a1a}
+.nav-link,.tab-pill{transition:background-color .15s,color .15s,border-color .15s}
+.nav-link.mc-active,.tab-pill.mc-active{background:#005bb3!important;color:#fff!important;border-color:#005bb3!important}
+.nav-link:not(.mc-active){background:transparent!important;color:#414753!important}
+.tab-pill:not(.mc-active){background:#e8eeff!important;color:#001b3f!important}
+#ctrlLqr.mc-active,#ctrlPole.mc-active{background:#005bb3!important;color:#fff!important}
+#ctrlLqr:not(.mc-active),#ctrlPole:not(.mc-active){background:#e8eeff!important;color:#001b3f!important}
 </style>
 </head>
 <body class="bg-surface text-on-surface antialiased">
@@ -68,21 +74,12 @@ const tabs=['curriculum','pendulum','robotics','theory','benchmarks'];
 function switchMainTab(name){
   tabs.forEach(t=>document.getElementById('view-'+t)?.classList.toggle('active',t===name));
   document.querySelectorAll('[data-main-tab]').forEach(b=>{
-    const selected=b.dataset.mainTab===name;
-    b.classList.remove('bg-primary','text-on-primary');
-    if(b.classList.contains('tab-pill')){
-      b.classList.toggle('bg-primary',selected);
-      b.classList.toggle('text-on-primary',selected);
-      b.classList.toggle('bg-surface-container',!selected);
-    }else if(b.classList.contains('nav-link')){
-      b.classList.toggle('bg-primary',selected);
-      b.classList.toggle('text-on-primary',selected);
-      b.classList.toggle('text-on-surface-variant',!selected);
-    }
+    b.classList.toggle('mc-active',b.dataset.mainTab===name);
   });
   window.scrollTo({top:100,behavior:'smooth'});
 }
 document.querySelectorAll('[data-main-tab]').forEach(b=>b.addEventListener('click',()=>switchMainTab(b.dataset.mainTab)));
+switchMainTab('curriculum');
 document.querySelectorAll('[data-tier]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.tier).classList.toggle('open')));
 document.getElementById('expandAll').onclick=()=>document.querySelectorAll('.tier-drawer').forEach(x=>x.classList.add('open'));
 document.getElementById('collapseAll').onclick=()=>document.querySelectorAll('.tier-drawer').forEach(x=>x.classList.remove('open'));
@@ -91,10 +88,32 @@ let controller='lqr', pend={x:0,xd:0,th:0.06,thd:0,u:0};
 const pc=document.getElementById('pendulumCanvas'),pctx=pc.getContext('2d');
 function sizeCanvas(c){const r=c.getBoundingClientRect();c.width=Math.max(1,Math.floor(r.width*devicePixelRatio));c.height=Math.max(1,Math.floor(r.height*devicePixelRatio));return {w:r.width,h:r.height,d:devicePixelRatio};}
 function resetPendulum(){pend={x:0,xd:0,th:0.06,thd:0,u:0};}
-function stepPend(dt){const K=controller==='lqr'?[7.5,4.5,34,7.5]:[5.5,3.0,26,5.5];pend.u=-(K[0]*pend.x+K[1]*pend.xd+K[2]*pend.th+K[3]*pend.thd);const xdd=pend.u-0.45*pend.xd+0.8*pend.th;const thdd=9.81*pend.th-0.65*pend.thd-1.8*pend.u;pend.xd+=xdd*dt;pend.x+=pend.xd*dt;pend.thd+=thdd*dt;pend.th+=pend.thd*dt;}
+function stepPend(dt){
+  const K=controller==='lqr'?[2.5,3.5,-23,-5.5]:[2.0,3.0,-20,-5.0];
+  pend.u=-(K[0]*pend.x+K[1]*pend.xd+K[2]*pend.th+K[3]*pend.thd);
+  pend.u=Math.max(-25,Math.min(25,pend.u));
+  const xdd=-0.8*pend.x-1.2*pend.xd+0.6*pend.th+0.25*pend.u;
+  const thdd=14*pend.th-0.5*pend.thd-1.5*pend.u;
+  pend.xd+=xdd*dt; pend.x+=pend.xd*dt;
+  pend.thd+=thdd*dt; pend.th+=pend.thd*dt;
+  if(!Number.isFinite(pend.x)||!Number.isFinite(pend.th)||Math.abs(pend.x)>6||Math.abs(pend.th)>3){
+    resetPendulum();
+  }
+}
 function drawPend(){const {w,h,d}=sizeCanvas(pc);pctx.setTransform(d,0,0,d,0,0);pctx.clearRect(0,0,w,h);pctx.fillStyle='#071622';pctx.fillRect(0,0,w,h);pctx.strokeStyle='#24475e';for(let i=0;i<w;i+=30){pctx.beginPath();pctx.moveTo(i,0);pctx.lineTo(i,h);pctx.stroke()}for(let j=0;j<h;j+=30){pctx.beginPath();pctx.moveTo(0,j);pctx.lineTo(w,j);pctx.stroke()}const cx=w/2+pend.x*80,cy=h*0.72;pctx.strokeStyle='#8fa8b8';pctx.lineWidth=3;pctx.beginPath();pctx.moveTo(40,cy+35);pctx.lineTo(w-40,cy+35);pctx.stroke();pctx.fillStyle='#168eea';pctx.fillRect(cx-45,cy-18,90,36);const L=120,px=cx+L*Math.sin(pend.th),py=cy-L*Math.cos(pend.th);pctx.strokeStyle='#54e5a7';pctx.lineWidth=7;pctx.beginPath();pctx.moveTo(cx,cy);pctx.lineTo(px,py);pctx.stroke();pctx.fillStyle='#f5bc58';pctx.beginPath();pctx.arc(px,py,13,0,Math.PI*2);pctx.fill();document.getElementById('statX').textContent=pend.x.toFixed(2)+' m';document.getElementById('statTheta').textContent=(pend.th*180/Math.PI).toFixed(2)+'°';document.getElementById('statU').textContent=pend.u.toFixed(2)+' N';const st=Math.abs(pend.th)<0.35;document.getElementById('statStable').textContent=st?'Stable':'Recovering';document.getElementById('statStable').className='font-bold '+(st?'text-secondary':'text-error');}
 let last=performance.now();function loop(t){const dt=Math.min(0.02,(t-last)/1000);last=t;stepPend(dt);drawPend();requestAnimationFrame(loop)}requestAnimationFrame(loop);
-document.getElementById('ctrlLqr').onclick=()=>{controller='lqr';document.getElementById('pendulumStatus').textContent='Controller: LQR'};document.getElementById('ctrlPole').onclick=()=>{controller='pole';document.getElementById('pendulumStatus').textContent='Controller: Pole Placement'};document.getElementById('applyImpulse').onclick=()=>{pend.xd+=Number(document.getElementById('impulseSlider').value)/7};document.getElementById('resetPendulum').onclick=resetPendulum;document.getElementById('globalReset').onclick=resetPendulum;
+function setController(mode){
+  controller=mode;
+  document.getElementById('pendulumStatus').textContent=mode==='lqr'?'Controller: LQR':'Controller: Pole Placement';
+  document.getElementById('ctrlLqr').classList.toggle('mc-active',mode==='lqr');
+  document.getElementById('ctrlPole').classList.toggle('mc-active',mode==='pole');
+}
+document.getElementById('ctrlLqr').onclick=()=>setController('lqr');
+document.getElementById('ctrlPole').onclick=()=>setController('pole');
+document.getElementById('applyImpulse').onclick=()=>{pend.xd+=Number(document.getElementById('impulseSlider').value)/12};
+document.getElementById('resetPendulum').onclick=resetPendulum;
+document.getElementById('globalReset').onclick=resetPendulum;
+setController('lqr');
 
 const rc=document.getElementById('robotCanvas'),rctx=rc.getContext('2d');let robot={x:.2,y:.6,tx:.2,ty:.6};function rloop(){robot.x+=(robot.tx-robot.x)*.06;robot.y+=(robot.ty-robot.y)*.06;const {w,h,d}=sizeCanvas(rc);rctx.setTransform(d,0,0,d,0,0);rctx.clearRect(0,0,w,h);rctx.fillStyle='#071622';rctx.fillRect(0,0,w,h);const ox=w/2,oy=h*.78,s=260,L1=.38,L2=.32;const x=robot.x,y=robot.y;const r=Math.min(Math.hypot(x,y),L1+L2-.001);const c2=Math.max(-1,Math.min(1,(r*r-L1*L1-L2*L2)/(2*L1*L2)));const q2=Math.acos(c2);const q1=Math.atan2(y,x)-Math.atan2(L2*Math.sin(q2),L1+L2*Math.cos(q2));const x1=ox+s*L1*Math.cos(q1),y1=oy-s*L1*Math.sin(q1);const x2=x1+s*L2*Math.cos(q1+q2),y2=y1-s*L2*Math.sin(q1+q2);rctx.strokeStyle='#54e5a7';rctx.lineWidth=10;rctx.beginPath();rctx.moveTo(ox,oy);rctx.lineTo(x1,y1);rctx.lineTo(x2,y2);rctx.stroke();rctx.fillStyle='#168eea';[ [ox,oy],[x1,y1],[x2,y2] ].forEach(p=>{rctx.beginPath();rctx.arc(p[0],p[1],10,0,Math.PI*2);rctx.fill()});document.getElementById('robotX').textContent=robot.x.toFixed(2);document.getElementById('robotY').textContent=robot.y.toFixed(2);document.getElementById('robotErr').textContent=Math.hypot(robot.tx-robot.x,robot.ty-robot.y).toFixed(3);requestAnimationFrame(rloop)}requestAnimationFrame(rloop);document.querySelectorAll('.robotTarget').forEach(b=>b.onclick=()=>{robot.tx=Number(b.dataset.x);robot.ty=Number(b.dataset.y)});
 

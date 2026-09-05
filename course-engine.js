@@ -141,7 +141,7 @@
   injectStyle();
   renderCurriculum();
   renderTheoryDocs();
-  try{renderBenchmarks();}catch(err){
+  try{renderBenchmarks(); setTimeout(()=>{const v=$('#view-benchmarks');if(v && !v.querySelector('.bench-choice')) renderBenchmarks();},50);}catch(err){
     const view=$('#view-benchmarks');
     if(view) view.innerHTML='<div class="max-w-[1100px] mx-auto px-gutter-desktop py-unit-8"><h1 class="font-headline-section text-headline-section">Benchmarks & Problem Sets</h1><p class="mt-3 text-[13px]">The checkpoint module could not load. Refresh the page once. If this remains visible, the curriculum data did not initialize correctly.</p></div>';
     console.error(err);

@@ -47,13 +47,29 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
     <div><span class="font-label-caps text-label-caps text-primary uppercase">Modern Control Computational Lab</span><h1 class="font-display-hero text-display-hero max-md:text-[34px] max-md:leading-[40px] mt-unit-2">Zero-to-Advanced Control Systems Mastery</h1><p class="font-body-base text-body-base text-on-surface-variant max-w-3xl mt-unit-4">A rigorous interactive platform for classical control, state-space analysis, controllability, observability, feedback design, observers, Lyapunov stability, LQR, robotics, and computational verification.</p><div class="flex flex-wrap gap-unit-3 mt-unit-5"><button class="px-unit-5 py-unit-3 rounded-lg bg-primary text-on-primary font-title-card" data-main-tab="pendulum">Launch Interactive Lab</button><button class="px-unit-5 py-unit-3 rounded-lg bg-surface-container-high font-title-sub" data-main-tab="robotics">Open Robotics CTC Lab</button></div></div>
     <div class="rounded-xl bg-surface-container-lowest p-unit-5 shadow-md flex flex-col gap-unit-4"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-primary">LIVE SYSTEM TELEMETRY</span><span class="text-secondary text-[11px]">Stable • Verified</span></div><div class="canvas-dark rounded-lg h-[260px] relative overflow-hidden"><svg viewBox="0 0 520 260" class="absolute inset-0 w-full h-full"><line x1="40" y1="210" x2="480" y2="210" stroke="#385569"/><line x1="260" y1="28" x2="260" y2="230" stroke="#385569"/><path d="M35 202 C100 40 160 55 220 145 S350 190 490 105" fill="none" stroke="#54e5a7" stroke-width="4"/><circle cx="140" cy="40" r="5" fill="#10a978"/><circle cx="280" cy="40" r="4" fill="#005bb3"/></svg></div><div class="grid grid-cols-3 gap-unit-2 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Gramian Rank</div><div class="font-bold text-primary">4 of 4</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Settling Time</div><div class="font-bold text-secondary">1.42 sec</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Overshoot</div><div class="font-bold">&lt; 4.8%</div></div></div></div>
   </section>
-  <section class="max-w-[1320px] mx-auto px-gutter-desktop pt-unit-3 pb-unit-2">
+  <section class="max-w-[1320px] mx-auto px-gutter-desktop pt-unit-4 pb-unit-5">
    <div id="learning-path-cards"></div>
    <div class="flex justify-center mt-unit-5">
      <button class="px-unit-6 py-unit-3 rounded-lg bg-secondary text-on-secondary font-title-card" data-main-tab="labs">Open Practical Labs →</button>
    </div>
  </section>
- <section id="full-course-grid" class="bg-surface py-unit-4"></section>
+ <section id="full-course-grid" class="bg-surface py-unit-4" hidden></section>
+ <footer class="mt-unit-8 border-t border-outline-variant/40 bg-[#071827] text-white">
+   <div class="max-w-[1320px] mx-auto px-gutter-desktop py-unit-8 grid md:grid-cols-[220px_1fr_auto] gap-unit-6 items-center">
+     <div class="flex items-center gap-unit-3">
+       <img src="https://raw.githubusercontent.com/ferdousbhuiya/Website_for_dataAnalytics_practice/main/logo.png" alt="Ferdous logo" class="w-16 h-16 object-contain rounded-lg bg-white/95 p-1"/>
+       <div><strong class="block text-[15px]">FERDOUS</strong><span class="block text-[9px] text-slate-300">Learning • Practice • Build</span></div>
+     </div>
+     <div>
+       <h3 class="font-title-card text-[14px]">Modern Control Learning</h3>
+       <p class="text-[11px] text-slate-300 mt-2 max-w-2xl">A step-by-step learning platform for rebuilding control-system fundamentals and progressing through state-space analysis, feedback design, observers, stability, optimal control, MATLAB/Simulink, and practical labs.</p>
+     </div>
+     <div class="text-[10px] text-slate-400 md:text-right">
+       <div>Structured learning from beginner to advanced</div>
+       <div class="mt-1">Interactive labs • Theory • Practice • Progress</div>
+     </div>
+   </div>
+ </footer>
 </section>
 
 <section id="view-labs" class="tab-view">
@@ -292,4 +308,4 @@ document.getElementById('resetRobotTarget').onclick=()=>setRobotTarget(.20,.60);
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=9"></script><script src="course-engine.js?v=9"></script></body></html>
+<script src="course-content.js?v=9"></script><script src="course-engine.js?v=10"></script></body></html>

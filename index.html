@@ -34,20 +34,49 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
   </div>
   </header>
 <main class="pt-[64px]">
-<section class="bg-surface-container-low py-unit-3"><div class="max-w-[1440px] mx-auto px-gutter-desktop flex flex-wrap gap-unit-2">
-<button class="tab-pill bg-primary text-on-primary px-unit-4 py-unit-2 rounded-lg" data-main-tab="curriculum">Curriculum Ladder</button>
-<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="pendulum">Inverted Pendulum Lab</button>
-<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="robotics">Robotics / CTC Lab</button>
-<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="theory">Theory & Math Docs</button>
-<button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="benchmarks">Benchmarks</button>
-</div></section>
+<section class="bg-surface-container-low py-unit-3">
+  <div class="max-w-[1320px] mx-auto px-gutter-desktop flex flex-wrap gap-unit-2">
+    <button class="tab-pill bg-primary text-on-primary px-unit-4 py-unit-2 rounded-lg" data-main-tab="curriculum">Curriculum</button>
+    <button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="theory">Theory & Math Docs</button>
+    <button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="benchmarks">Benchmarks & Problem Sets</button>
+  </div>
+</section>
 
 <section id="view-curriculum" class="tab-view active">
   <section class="max-w-[1440px] mx-auto px-gutter-desktop py-unit-10 grid grid-cols-1 lg:grid-cols-[1.08fr_.92fr] gap-unit-8 items-center">
     <div><span class="font-label-caps text-label-caps text-primary uppercase">Modern Control Computational Lab</span><h1 class="font-display-hero text-display-hero max-md:text-[34px] max-md:leading-[40px] mt-unit-2">Zero-to-Advanced Control Systems Mastery</h1><p class="font-body-base text-body-base text-on-surface-variant max-w-3xl mt-unit-4">A rigorous interactive platform for classical control, state-space analysis, controllability, observability, feedback design, observers, Lyapunov stability, LQR, robotics, and computational verification.</p><div class="flex flex-wrap gap-unit-3 mt-unit-5"><button class="px-unit-5 py-unit-3 rounded-lg bg-primary text-on-primary font-title-card" data-main-tab="pendulum">Launch Interactive Lab</button><button class="px-unit-5 py-unit-3 rounded-lg bg-surface-container-high font-title-sub" data-main-tab="robotics">Open Robotics CTC Lab</button></div></div>
     <div class="rounded-xl bg-surface-container-lowest p-unit-5 shadow-md flex flex-col gap-unit-4"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-primary">LIVE SYSTEM TELEMETRY</span><span class="text-secondary text-[11px]">Stable • Verified</span></div><div class="canvas-dark rounded-lg h-[260px] relative overflow-hidden"><svg viewBox="0 0 520 260" class="absolute inset-0 w-full h-full"><line x1="40" y1="210" x2="480" y2="210" stroke="#385569"/><line x1="260" y1="28" x2="260" y2="230" stroke="#385569"/><path d="M35 202 C100 40 160 55 220 145 S350 190 490 105" fill="none" stroke="#54e5a7" stroke-width="4"/><circle cx="140" cy="40" r="5" fill="#10a978"/><circle cx="280" cy="40" r="4" fill="#005bb3"/></svg></div><div class="grid grid-cols-3 gap-unit-2 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Gramian Rank</div><div class="font-bold text-primary">4 of 4</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Settling Time</div><div class="font-bold text-secondary">1.42 sec</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Overshoot</div><div class="font-bold">&lt; 4.8%</div></div></div></div>
   </section>
-  <section id="full-course-grid" class="bg-surface py-unit-4"></section>
+  <section class="max-w-[1320px] mx-auto px-gutter-desktop pt-unit-3 pb-unit-2">
+   <div id="learning-path-cards"></div>
+   <div class="flex justify-center mt-unit-5">
+     <button class="px-unit-6 py-unit-3 rounded-lg bg-secondary text-on-secondary font-title-card" data-main-tab="labs">Open Practical Labs →</button>
+   </div>
+ </section>
+ <section id="full-course-grid" class="bg-surface py-unit-4"></section>
+</section>
+
+<section id="view-labs" class="tab-view">
+  <div class="max-w-[1180px] mx-auto px-gutter-desktop py-unit-8">
+    <span class="font-label-caps text-label-caps text-primary">PRACTICAL CONTROL LABS</span>
+    <h1 class="font-headline-section text-headline-section mt-2">Choose a Lab</h1>
+    <p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">These labs are separate from the main course navigation. Use them after learning the related theory to experiment with state feedback, disturbance rejection, inverse kinematics, tracking, and control performance.</p>
+    <div class="grid md:grid-cols-2 gap-unit-5 mt-6">
+      <article class="bg-white rounded-xl p-unit-6 shadow-md border border-outline-variant/40">
+        <div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold text-xl">∿</div>
+        <h2 class="font-headline-modal text-headline-modal mt-4">Inverted Pendulum Lab</h2>
+        <p class="text-[12px] text-on-surface-variant mt-2">Compare LQR and pole-placement feedback, apply disturbances, inspect gain K, and observe stability, recovery, cart motion, angle, and control effort.</p>
+        <button class="mt-5 px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold" data-main-tab="pendulum">Open Pendulum Lab →</button>
+      </article>
+      <article class="bg-white rounded-xl p-unit-6 shadow-md border border-outline-variant/40">
+        <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xl">R</div>
+        <h2 class="font-headline-modal text-headline-modal mt-4">Robotics / CTC Lab</h2>
+        <p class="text-[12px] text-on-surface-variant mt-2">Enter X/Y targets, explore the robot workspace, observe inverse kinematics, and measure end-effector tracking error.</p>
+        <button class="mt-5 px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold" data-main-tab="robotics">Open Robotics Lab →</button>
+      </article>
+    </div>
+    <button class="mt-6 px-unit-4 py-unit-2 rounded-lg bg-surface-container-high font-bold" data-main-tab="curriculum">← Back to Curriculum</button>
+  </div>
 </section>
 
 <section id="view-pendulum" class="tab-view">
@@ -175,7 +204,7 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 </section>
 </main>
 <script>
-const tabs=['curriculum','pendulum','robotics','theory','benchmarks'];
+const tabs=['curriculum','labs','pendulum','robotics','theory','benchmarks'];
 function switchMainTab(name){
   tabs.forEach(t=>document.getElementById('view-'+t)?.classList.toggle('active',t===name));
   document.querySelectorAll('[data-main-tab]').forEach(b=>{
@@ -236,11 +265,13 @@ function setRobotTarget(x,y){
 }
 function rloop(){
   robot.x+=(robot.tx-robot.x)*.06;robot.y+=(robot.ty-robot.y)*.06;
-  const {w,h,d}=sizeCanvas(rc);rctx.setTransform(d,0,0,d,0,0);rctx.clearRect(0,0,w,h);
+  const {w,h,d}=sizeCanvas(rc);
+  if(w<50||h<50){requestAnimationFrame(rloop);return;}
+  rctx.setTransform(d,0,0,d,0,0);rctx.clearRect(0,0,w,h);
   rctx.fillStyle='#071622';rctx.fillRect(0,0,w,h);rctx.strokeStyle='#24475e';rctx.lineWidth=1;
   for(let gx=0;gx<w;gx+=30){rctx.beginPath();rctx.moveTo(gx,0);rctx.lineTo(gx,h);rctx.stroke()}
   for(let gy=0;gy<h;gy+=30){rctx.beginPath();rctx.moveTo(0,gy);rctx.lineTo(w,gy);rctx.stroke()}
-  const ox=w/2,oy=h/2,s=Math.min((w-46)/(2*.72),(h-46)/(2*.72)),L1=.38,L2=.32,x=robot.x,y=robot.y;
+  const ox=w/2,oy=h/2,s=Math.max(20,Math.min((w-46)/(2*.72),(h-46)/(2*.72))),L1=.38,L2=.32,x=robot.x,y=robot.y;
   rctx.strokeStyle='#31576d';rctx.lineWidth=1.5;rctx.setLineDash([5,5]);rctx.beginPath();rctx.arc(ox,oy,s*(L1+L2),0,Math.PI*2);rctx.stroke();rctx.setLineDash([]);
   rctx.strokeStyle='#49697d';rctx.beginPath();rctx.moveTo(ox-s*.72,oy);rctx.lineTo(ox+s*.72,oy);rctx.moveTo(ox,oy-s*.72);rctx.lineTo(ox,oy+s*.72);rctx.stroke();
   const r=Math.min(Math.hypot(x,y),L1+L2-.001),c2=Math.max(-1,Math.min(1,(r*r-L1*L1-L2*L2)/(2*L1*L2))),q2=Math.acos(c2);
@@ -261,4 +292,4 @@ document.getElementById('resetRobotTarget').onclick=()=>setRobotTarget(.20,.60);
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=8"></script><script src="course-engine.js?v=8"></script></body></html>
+<script src="course-content.js?v=9"></script><script src="course-engine.js?v=9"></script></body></html>

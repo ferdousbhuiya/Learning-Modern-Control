@@ -65,16 +65,23 @@
 
   function renderBenchmarks(){
     const view=document.querySelector('#view-benchmarks'); if(!view)return;
-    const stageCards=MC.stages.map(s=>{
-      const sample=s.lessons.slice(0,Math.min(3,s.lessons.length));
+    const completedStages=MC.stages.filter(s=>stageDone(s)===s.lessons.length);
+    const lockedStages=MC.stages.filter(s=>stageDone(s)!==s.lessons.length);
+
+    const unlockedHtml=completedStages.map(s=>{
+      const sample=s.lessons.slice(0,Math.min(5,s.lessons.length));
       return `<section class="bg-white rounded-xl shadow-sm border border-outline-variant/40 overflow-hidden">
         <div class="p-unit-5 bg-surface-container-low flex items-start justify-between gap-4">
-          <div><span class="text-primary text-[10px] font-bold">STAGE ${String(s.id).padStart(2,'0')}</span><h3 class="font-title-card mt-1">${s.title}</h3><p class="text-[11px] text-on-surface-variant mt-1">${s.description}</p></div>
-          <button type="button" class="px-unit-3 py-unit-2 rounded bg-primary text-on-primary text-[10px] font-bold whitespace-nowrap" data-open-benchmark-stage="${s.id}">Open Stage →</button>
+          <div>
+            <span class="text-secondary text-[10px] font-bold">UNLOCKED • STAGE ${String(s.id).padStart(2,'0')}</span>
+            <h3 class="font-title-card mt-1">${s.title}</h3>
+            <p class="text-[11px] text-on-surface-variant mt-1">You completed all ${s.lessons.length} lessons in this stage. These checkpoint questions are now available.</p>
+          </div>
+          <button type="button" class="px-unit-3 py-unit-2 rounded bg-primary text-on-primary text-[10px] font-bold whitespace-nowrap" data-open-benchmark-stage="${s.id}">Review Stage →</button>
         </div>
         <div class="p-unit-5 grid gap-unit-3">
           ${sample.map((l,i)=>`<article class="rounded-lg border border-outline-variant/40 p-unit-4 bg-surface-container-lowest">
-            <div class="flex items-center justify-between gap-3"><strong class="text-[12px]">${i+1}. ${l.title}</strong><span class="text-[9px] text-on-surface-variant">Lesson ${i+1}</span></div>
+            <div class="flex items-center justify-between gap-3"><strong class="text-[12px]">${i+1}. ${l.title}</strong><span class="text-[9px] text-on-surface-variant">Checkpoint</span></div>
             <p class="text-[12px] mt-2">${l.check.question}</p>
             <div class="grid gap-unit-2 mt-3">${l.check.choices.map((choice,j)=>`<button type="button" class="bench-choice p-unit-3 rounded-lg border border-outline-variant bg-surface-container text-left text-[11px]" data-stage="${s.id}" data-lesson="${i}" data-choice="${j}">${String.fromCharCode(65+j)}. ${choice}</button>`).join('')}</div>
             <div class="bench-feedback text-[10px] mt-3" data-feedback="${s.id}-${i}"></div>
@@ -83,7 +90,32 @@
         </div>
       </section>`;
     }).join('');
-    view.innerHTML=`<div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span><h1 class="font-headline-section text-headline-section mt-2">13-Stage Self-Study Checkpoints</h1><p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">Checkpoint questions are drawn directly from the full curriculum. Use them to test understanding, then jump back to the related lesson when needed.</p><div class="grid lg:grid-cols-2 gap-unit-4 mt-6">${stageCards}</div></div>`;
+
+    const lockedHtml=lockedStages.map(s=>{
+      const done=stageDone(s),total=s.lessons.length;
+      return `<article class="rounded-xl border border-outline-variant/40 bg-surface-container-low p-unit-4">
+        <div class="flex items-center justify-between gap-3">
+          <div><span class="text-[9px] font-bold text-on-surface-variant">LOCKED • STAGE ${String(s.id).padStart(2,'0')}</span><h3 class="font-title-card mt-1">${s.title}</h3></div>
+          <span class="text-[10px] font-bold">${done}/${total}</span>
+        </div>
+        <div class="mt-3 h-2 rounded-full bg-surface-container-high overflow-hidden"><div class="h-full bg-primary" style="width:${pct(done,total)}%"></div></div>
+        <p class="text-[10px] text-on-surface-variant mt-2">Complete all lessons and their quizzes in this stage to unlock its benchmark set.</p>
+        <button type="button" class="mt-3 px-unit-3 py-unit-2 rounded bg-primary text-on-primary text-[10px] font-bold" data-open-benchmark-stage="${s.id}">Continue Stage →</button>
+      </article>`;
+    }).join('');
+
+    view.innerHTML=`<div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8">
+      <span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span>
+      <h1 class="font-headline-section text-headline-section mt-2">Stage Mastery Checkpoints</h1>
+      <p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">Benchmarks are intentionally locked until a learner completes every lesson in the related stage. This keeps benchmark questions as a true end-of-stage mastery check rather than a second copy of the lesson quiz.</p>
+      ${completedStages.length
+        ? `<div class="grid lg:grid-cols-2 gap-unit-4 mt-6">${unlockedHtml}</div>`
+        : `<div class="mt-6 p-unit-6 rounded-xl bg-primary-fixed border border-primary/20"><h2 class="font-title-card">No benchmark set unlocked yet</h2><p class="text-[12px] mt-2">Finish all lessons in any stage first. When that stage reaches 100%, its benchmark questions will appear here automatically.</p></div>`}
+      <section class="mt-8">
+        <h2 class="font-headline-modal text-headline-modal">Locked stages</h2>
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-unit-3 mt-4">${lockedHtml}</div>
+      </section>
+    </div>`;
 
     view.querySelectorAll('.bench-choice').forEach(b=>b.addEventListener('click',()=>{
       const s=Number(b.dataset.stage),l=Number(b.dataset.lesson),choice=Number(b.dataset.choice);
@@ -93,7 +125,7 @@
       b.classList.add(choice===lesson.check.answer?'selected-correct':'selected-wrong');
       if(choice!==lesson.check.answer && group[lesson.check.answer]) group[lesson.check.answer].classList.add('selected-correct');
       const fb=view.querySelector('[data-feedback="'+s+'-'+l+'"]');
-      if(fb) fb.textContent=choice===lesson.check.answer?'Correct. Explain the reason before moving on.':'Not correct. Review the full lesson, then try again.';
+      if(fb) fb.textContent=choice===lesson.check.answer?'Correct. This stage concept is secure.':'Not correct. Review the related lesson and try again.';
     }));
     view.querySelectorAll('[data-open-benchmark-stage]').forEach(b=>b.addEventListener('click',()=>openStage(Number(b.dataset.openBenchmarkStage))));
     view.querySelectorAll('[data-review-lesson]').forEach(b=>b.addEventListener('click',()=>{const [s,l]=b.dataset.reviewLesson.split('-').map(Number);openLesson(s,l);}));
@@ -160,7 +192,7 @@
     $$('[data-jump]',o).forEach(b=>b.onclick=()=>openLesson(stageId,Number(b.dataset.jump)));
     $$('[data-answer]',o).forEach(b=>b.onclick=()=>{const j=Number(b.dataset.answer);$$('[data-answer]',o).forEach(x=>x.classList.remove('ok','bad'));b.classList.add(j===l.check.answer?'ok':'bad');if(j!==l.check.answer)$$('[data-answer]',o)[l.check.answer].classList.add('ok');$('[data-feedback]',o).textContent=j===l.check.answer?'Correct. Explain why before continuing.':'Review the related section and try again.'});
     $('[data-prev]',o).onclick=()=>i>0&&openLesson(stageId,i-1);
-    $('[data-next]',o).onclick=()=>{progress.completed[key(stageId,i)]=true;save();if(i<s.lessons.length-1)openLesson(stageId,i+1);else openStage(stageId)};
+    $('[data-next]',o).onclick=()=>{progress.completed[key(stageId,i)]=true;save();renderBenchmarks();if(i<s.lessons.length-1)openLesson(stageId,i+1);else openStage(stageId)};
   }
 
   window.openModernControlStage=openStage;

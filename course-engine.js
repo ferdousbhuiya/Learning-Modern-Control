@@ -109,12 +109,12 @@
 
     cards.innerHTML=`<div class="grid md:grid-cols-3 gap-unit-4">${groups.map((g,gi)=>{
       const total=g.stages.reduce((n,id)=>n+MC.stages[id].lessons.length,0),done=g.stages.reduce((n,id)=>n+stageDone(MC.stages[id]),0);
-      return `<article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+      return `<article class="path-card p-unit-5">
         <span class="text-[10px] font-bold text-primary">${g.label}</span>
         <h3 class="font-headline-modal text-headline-modal mt-2">${g.title}</h3>
         <p class="text-[11px] text-on-surface-variant mt-2 min-h-[38px]">${g.subtitle}</p>
-        <div class="mt-4 h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-secondary" style="width:${pct(done,total)}%"></div></div>
-        <div class="flex justify-between mt-2 text-[9px] text-on-surface-variant"><span>${done}/${total} lessons</span><span>${pct(done,total)}%</span></div>
+        <div class="path-progress-wrap"><div class="path-progress"><i style="width:${pct(done,total)}%"></i></div>
+        <div class="flex justify-between mt-2 text-[9px] text-on-surface-variant"><span>${done}/${total} lessons</span><span>${pct(done,total)}%</span></div></div>
         <button type="button" class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-open-path="${gi}">Explore ${g.label} Courses →</button>
       </article>`;
     }).join('')}</div>`;
@@ -168,7 +168,10 @@
   injectStyle();
   renderCurriculum();
   renderTheoryDocs();
-  try{renderBenchmarks(); setTimeout(()=>{const v=$('#view-benchmarks');if(v && !v.querySelector('.bench-choice')) renderBenchmarks();},50);}catch(err){
+  try{
+    renderBenchmarks();
+    setTimeout(()=>{const v=document.querySelector('#view-benchmarks');if(v && !v.querySelector('.bench-choice')) renderBenchmarks();},120);
+  }catch(err){
     const view=$('#view-benchmarks');
     if(view) view.innerHTML='<div class="max-w-[1100px] mx-auto px-gutter-desktop py-unit-8"><h1 class="font-headline-section text-headline-section">Benchmarks & Problem Sets</h1><p class="mt-3 text-[13px]">The checkpoint module could not load. Refresh the page once. If this remains visible, the curriculum data did not initialize correctly.</p></div>';
     console.error(err);

@@ -199,7 +199,6 @@
   window.openModernControlLesson=openLesson;
   injectStyle();
   renderCurriculum();
-  renderTheoryDocs();
   try{
     renderBenchmarks();
     setTimeout(()=>{const v=document.querySelector('#view-benchmarks');if(v && !v.querySelector('.bench-choice')) renderBenchmarks();},120);
@@ -208,6 +207,7 @@
     if(view) view.innerHTML='<div class="max-w-[1100px] mx-auto px-gutter-desktop py-unit-8"><h1 class="font-headline-section text-headline-section">Benchmarks & Problem Sets</h1><p class="mt-3 text-[13px]">The checkpoint module could not load. Refresh the page once. If this remains visible, the curriculum data did not initialize correctly.</p></div>';
     console.error(err);
   }
+  try{renderTheoryDocs();}catch(err){console.error('Theory docs:',err);}
   const navResume=document.createElement('button');
   navResume.textContent='Resume Full Course';navResume.className='px-unit-3 py-unit-2 rounded bg-secondary text-on-secondary text-[11px]';
   navResume.onclick=()=>openLesson(progress.last.stage||0,progress.last.lesson||0);

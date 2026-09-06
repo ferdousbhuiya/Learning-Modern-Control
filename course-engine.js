@@ -100,11 +100,31 @@
   }
 
   function renderCurriculum(){
-    const mount=$('#full-course-grid'); if(!mount)return;
-    const done=Object.values(progress.completed).filter(Boolean).length;
-    const total=MC.stages.reduce((n,s)=>n+s.lessons.length,0);
-    mount.innerHTML=`<section class="mc13-wrap"><div class="mc13-head"><div><small>FULL LEARNING PATH</small><h2>Complete 13-Stage Modern Control Curriculum</h2><p>Start from mathematics and classical control, then move step by step through state space, controllability, feedback, observers, Lyapunov stability, LQR, MATLAB/Simulink, and advanced projects.</p></div><div class="mc13-progress"><span>Overall progress</span><b>${pct(done,total)}%</b><div class="mc13-bar"><i style="width:${pct(done,total)}%"></i></div></div></div><div class="mc13-grid">${MC.stages.map(s=>{const d=stageDone(s);return `<button class="mc13-card" data-mc-stage="${s.id}"><div class="meta"><span>STAGE ${String(s.id).padStart(2,'0')} · ${s.level}</span><span>${d}/${s.lessons.length}</span></div><h3>${s.title}</h3><p>${s.description}</p><div class="mini"><i style="width:${pct(d,s.lessons.length)}%"></i></div></button>`}).join('')}</div></section>`;
+    const mount=$('#full-course-grid'), cards=$('#learning-path-cards'); if(!mount||!cards)return;
+    const groups=[
+      {title:'Foundation & Refresher',subtitle:'Rebuild the knowledge you may have forgotten.',stages:[0,1,2,3],tone:'foundation'},
+      {title:'Modern Control Core',subtitle:'Learn the state-space tools used in modern control design.',stages:[4,5,6,7,8],tone:'core'},
+      {title:'Advanced Design & Applications',subtitle:'Stability, optimal control, MATLAB labs, digital control, and projects.',stages:[9,10,11,12],tone:'advanced'}
+    ];
+    cards.innerHTML=`<div class="grid md:grid-cols-3 gap-unit-4">${groups.map((g,gi)=>{
+      const total=g.stages.reduce((n,id)=>n+MC.stages[id].lessons.length,0),done=g.stages.reduce((n,id)=>n+stageDone(MC.stages[id]),0);
+      return `<article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <span class="text-[10px] font-bold text-primary">PATH ${gi+1}</span>
+        <h3 class="font-headline-modal text-headline-modal mt-2">${g.title}</h3>
+        <p class="text-[11px] text-on-surface-variant mt-2">${g.subtitle}</p>
+        <div class="mt-4 h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-secondary" style="width:${pct(done,total)}%"></div></div>
+        <div class="flex justify-between mt-2 text-[9px] text-on-surface-variant"><span>${done}/${total} lessons completed</span><span>${pct(done,total)}%</span></div>
+        <button type="button" class="mt-4 px-unit-4 py-unit-2 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-path-first="${g.stages[0]}">Start / Continue →</button>
+      </article>`;
+    }).join('')}</div>`;
+
+    mount.innerHTML=`<div class="max-w-[1320px] mx-auto px-gutter-desktop py-unit-6">${groups.map((g,gi)=>`
+      <section class="mb-unit-8">
+        <div class="flex items-end justify-between gap-4 mb-unit-4"><div><span class="text-[10px] font-bold text-primary">PATH ${gi+1}</span><h2 class="font-headline-section text-headline-section mt-1">${g.title}</h2><p class="text-[11px] text-on-surface-variant mt-1">${g.subtitle}</p></div></div>
+        <div class="mc13-grid">${g.stages.map(id=>{const s=MC.stages[id],d=stageDone(s);return `<button class="mc13-card" data-mc-stage="${id}"><div class="meta"><span>STAGE ${String(id).padStart(2,'0')} · ${s.level}</span><span>${d}/${s.lessons.length}</span></div><h3>${s.title}</h3><p>${s.description}</p><div class="mini"><i style="width:${pct(d,s.lessons.length)}%"></i></div></button>`}).join('')}</div>
+      </section>`).join('')}</div>`;
     $$('[data-mc-stage]',mount).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.mcStage)));
+    $$('[data-path-first]',cards).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.pathFirst)));
   }
 
   function overlayBase(title,sub,body){

@@ -102,29 +102,40 @@
   function renderCurriculum(){
     const mount=$('#full-course-grid'), cards=$('#learning-path-cards'); if(!mount||!cards)return;
     const groups=[
-      {title:'Foundation & Refresher',subtitle:'Rebuild the knowledge you may have forgotten.',stages:[0,1,2,3],tone:'foundation'},
-      {title:'Modern Control Core',subtitle:'Learn the state-space tools used in modern control design.',stages:[4,5,6,7,8],tone:'core'},
-      {title:'Advanced Design & Applications',subtitle:'Stability, optimal control, MATLAB labs, digital control, and projects.',stages:[9,10,11,12],tone:'advanced'}
+      {title:'Beginner / Foundation',subtitle:'Rebuild mathematics, feedback intuition, modeling, and classical control.',stages:[0,1,2,3],label:'BEGINNER'},
+      {title:'Intermediate / Modern Control Core',subtitle:'State-space fundamentals, analysis, controllability, feedback, and observers.',stages:[4,5,6,7,8],label:'INTERMEDIATE'},
+      {title:'Advanced / Design & Applications',subtitle:'Lyapunov stability, LQR, MATLAB/Simulink, digital control, and projects.',stages:[9,10,11,12],label:'ADVANCED'}
     ];
+
     cards.innerHTML=`<div class="grid md:grid-cols-3 gap-unit-4">${groups.map((g,gi)=>{
       const total=g.stages.reduce((n,id)=>n+MC.stages[id].lessons.length,0),done=g.stages.reduce((n,id)=>n+stageDone(MC.stages[id]),0);
       return `<article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
-        <span class="text-[10px] font-bold text-primary">PATH ${gi+1}</span>
+        <span class="text-[10px] font-bold text-primary">${g.label}</span>
         <h3 class="font-headline-modal text-headline-modal mt-2">${g.title}</h3>
-        <p class="text-[11px] text-on-surface-variant mt-2">${g.subtitle}</p>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[38px]">${g.subtitle}</p>
         <div class="mt-4 h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-secondary" style="width:${pct(done,total)}%"></div></div>
-        <div class="flex justify-between mt-2 text-[9px] text-on-surface-variant"><span>${done}/${total} lessons completed</span><span>${pct(done,total)}%</span></div>
-        <button type="button" class="mt-4 px-unit-4 py-unit-2 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-path-first="${g.stages[0]}">Start / Continue →</button>
+        <div class="flex justify-between mt-2 text-[9px] text-on-surface-variant"><span>${done}/${total} lessons</span><span>${pct(done,total)}%</span></div>
+        <button type="button" class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-open-path="${gi}">Explore ${g.label} Courses →</button>
       </article>`;
     }).join('')}</div>`;
 
-    mount.innerHTML=`<div class="max-w-[1320px] mx-auto px-gutter-desktop py-unit-6">${groups.map((g,gi)=>`
-      <section class="mb-unit-8">
-        <div class="flex items-end justify-between gap-4 mb-unit-4"><div><span class="text-[10px] font-bold text-primary">PATH ${gi+1}</span><h2 class="font-headline-section text-headline-section mt-1">${g.title}</h2><p class="text-[11px] text-on-surface-variant mt-1">${g.subtitle}</p></div></div>
+    function showPath(gi){
+      const g=groups[gi];
+      mount.hidden=false;
+      mount.innerHTML=`<div class="max-w-[1320px] mx-auto px-gutter-desktop py-unit-6">
+        <div class="flex items-start justify-between gap-4 mb-unit-5">
+          <div><span class="text-[10px] font-bold text-primary">${g.label} PATH</span><h2 class="font-headline-section text-headline-section mt-1">${g.title}</h2><p class="text-[11px] text-on-surface-variant mt-1">${g.subtitle}</p></div>
+          <button type="button" class="px-unit-4 py-unit-2 rounded-lg bg-surface-container-high font-bold text-[10px]" data-close-path>← Back to Learning Paths</button>
+        </div>
         <div class="mc13-grid">${g.stages.map(id=>{const s=MC.stages[id],d=stageDone(s);return `<button class="mc13-card" data-mc-stage="${id}"><div class="meta"><span>STAGE ${String(id).padStart(2,'0')} · ${s.level}</span><span>${d}/${s.lessons.length}</span></div><h3>${s.title}</h3><p>${s.description}</p><div class="mini"><i style="width:${pct(d,s.lessons.length)}%"></i></div></button>`}).join('')}</div>
-      </section>`).join('')}</div>`;
-    $$('[data-mc-stage]',mount).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.mcStage)));
-    $$('[data-path-first]',cards).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.pathFirst)));
+      </div>`;
+      $$('[data-mc-stage]',mount).forEach(b=>b.onclick=()=>openStage(Number(b.dataset.mcStage)));
+      $('[data-close-path]',mount).onclick=()=>{mount.hidden=true;mount.innerHTML='';cards.scrollIntoView({behavior:'smooth',block:'start'})};
+      mount.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    $$('[data-open-path]',cards).forEach(b=>b.onclick=()=>showPath(Number(b.dataset.openPath)));
+    mount.hidden=true; mount.innerHTML='';
   }
 
   function overlayBase(title,sub,body){

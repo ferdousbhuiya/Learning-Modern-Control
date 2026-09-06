@@ -89,27 +89,105 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 </section>
 
 <section id="view-labs" class="tab-view">
-  <div class="max-w-[1180px] mx-auto px-gutter-desktop py-unit-8">
+  <div class="max-w-[1240px] mx-auto px-gutter-desktop py-unit-8">
     <span class="font-label-caps text-label-caps text-primary">PRACTICAL CONTROL LABS</span>
-    <h1 class="font-headline-section text-headline-section mt-2">Choose a Lab</h1>
-    <p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">These labs are separate from the main course navigation. Use them after learning the related theory to experiment with state feedback, disturbance rejection, inverse kinematics, tracking, and control performance.</p>
-    <div class="grid md:grid-cols-2 gap-unit-5 mt-6">
-      <article class="bg-white rounded-xl p-unit-6 shadow-md border border-outline-variant/40">
-        <div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold text-xl">∿</div>
-        <h2 class="font-headline-modal text-headline-modal mt-4">Inverted Pendulum Lab</h2>
-        <p class="text-[12px] text-on-surface-variant mt-2">Compare LQR and pole-placement feedback, apply disturbances, inspect gain K, and observe stability, recovery, cart motion, angle, and control effort.</p>
-        <button class="mt-5 px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold" data-main-tab="pendulum">Open Pendulum Lab →</button>
-      </article>
-      <article class="bg-white rounded-xl p-unit-6 shadow-md border border-outline-variant/40">
-        <div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xl">R</div>
-        <h2 class="font-headline-modal text-headline-modal mt-4">Robotics / CTC Lab</h2>
-        <p class="text-[12px] text-on-surface-variant mt-2">Enter X/Y targets, explore the robot workspace, observe inverse kinematics, and measure end-effector tracking error.</p>
-        <button class="mt-5 px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold" data-main-tab="robotics">Open Robotics Lab →</button>
+    <h1 class="font-headline-section text-headline-section mt-2">Visual Labs + MATLAB Practice</h1>
+    <p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">Use these labs after the related lessons. Each lab shows the engineering idea visually and includes MATLAB code that produces the same type of result, so learners can connect equations, code, plots, and physical meaning.</p>
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-unit-4 mt-6">
+      <article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">1</div>
+        <div class="text-[9px] text-primary font-bold mt-3">Stage 1–2</div>
+        <h2 class="font-title-card mt-1">First-Order Step Response</h2>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[50px]">Change the time constant and gain, then see how speed and final value change.</p>
+        <button class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-main-tab="firstorder">Open Lab →</button>
+      </article><article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">2</div>
+        <div class="text-[9px] text-primary font-bold mt-3">Stage 3</div>
+        <h2 class="font-title-card mt-1">Second-Order Damping Lab</h2>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[50px]">Change damping ratio and natural frequency; compare overshoot, rise, and settling.</p>
+        <button class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-main-tab="secondorder">Open Lab →</button>
+      </article><article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">R</div>
+        <div class="text-[9px] text-primary font-bold mt-3">Stage 3</div>
+        <h2 class="font-title-card mt-1">Root-Locus / Gain Explorer</h2>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[50px]">Move loop gain and watch closed-loop pole locations and response tendency.</p>
+        <button class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-main-tab="rootlocus">Open Lab →</button>
+      </article><article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">A</div>
+        <div class="text-[9px] text-primary font-bold mt-3">Stage 4–5</div>
+        <h2 class="font-title-card mt-1">State-Space Eigenvalue Lab</h2>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[50px]">Change eigenvalues of A and watch stable, oscillatory, or unstable state motion.</p>
+        <button class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-main-tab="statespace">Open Lab →</button>
+      </article><article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">PID</div>
+        <div class="text-[9px] text-primary font-bold mt-3">Stage 3</div>
+        <h2 class="font-title-card mt-1">PID Tuning Lab</h2>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[50px]">Adjust Kp, Ki, Kd and see tracking, overshoot, settling, and control behavior.</p>
+        <button class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-main-tab="pidlab">Open Lab →</button>
+      </article><article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">∿</div>
+        <div class="text-[9px] text-primary font-bold mt-3">Stage 7 & 10</div>
+        <h2 class="font-title-card mt-1">Inverted Pendulum Lab</h2>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[50px]">Compare LQR and pole placement under disturbance.</p>
+        <button class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-main-tab="pendulum">Open Lab →</button>
+      </article><article class="bg-white rounded-xl p-unit-5 shadow-md border border-outline-variant/40">
+        <div class="w-11 h-11 rounded-xl bg-primary-fixed flex items-center justify-center text-primary font-bold">R2</div>
+        <div class="text-[9px] text-primary font-bold mt-3">Stage 12</div>
+        <h2 class="font-title-card mt-1">Robotics / CTC Lab</h2>
+        <p class="text-[11px] text-on-surface-variant mt-2 min-h-[50px]">Enter X/Y targets, observe inverse kinematics and tracking error.</p>
+        <button class="mt-4 w-full px-unit-4 py-unit-3 rounded-lg bg-primary text-on-primary font-bold text-[10px]" data-main-tab="robotics">Open Lab →</button>
       </article>
     </div>
     <button class="mt-6 px-unit-4 py-unit-2 rounded-lg bg-surface-container-high font-bold" data-main-tab="curriculum">← Back to Curriculum</button>
   </div>
 </section>
+
+<section id="view-firstorder" class="tab-view">
+<div class="max-w-[1180px] mx-auto px-gutter-desktop py-unit-6 grid lg:grid-cols-[280px_1fr] gap-unit-4">
+  <aside class="bg-white rounded-xl p-unit-5 shadow-md">
+    <span class="font-label-caps text-label-caps text-primary">FOUNDATION LAB</span><h1 class="font-headline-modal text-headline-modal mt-2">First-Order Step Response</h1>
+    <p class="text-[11px] text-on-surface-variant mt-2">Learn how gain K changes the final value and time constant τ changes response speed.</p>
+    <label class="block mt-4 text-[10px]">Gain K <b id="foKVal">1.0</b></label><input id="foK" type="range" min="0.5" max="3" step="0.1" value="1" class="w-full"/>
+    <label class="block mt-4 text-[10px]">Time constant τ <b id="foTauVal">1.0 s</b></label><input id="foTau" type="range" min="0.2" max="4" step="0.1" value="1" class="w-full"/>
+    <div class="mt-4 p-unit-3 bg-primary-fixed rounded font-code-mono text-[10px]">G(s)=K/(τs+1)</div>
+  </aside>
+  <main class="grid gap-unit-4">
+    <section class="bg-white rounded-xl p-unit-4 shadow-md"><canvas id="foCanvas" class="w-full h-[310px]"></canvas></section>
+    <section class="bg-[#102535] text-[#a7f3c8] rounded-xl p-unit-4"><div class="text-white font-bold text-[11px] mb-2">MATLAB practice</div><pre id="foCode" class="text-[10px] whitespace-pre-wrap"></pre></section>
+    <section class="bg-primary-fixed rounded-xl p-unit-4 text-[11px]"><b>What to observe:</b> at t=τ the response reaches about 63.2% of its final value. A smaller τ gives a faster response.</section>
+  </main>
+</div></section>
+
+<section id="view-secondorder" class="tab-view">
+<div class="max-w-[1180px] mx-auto px-gutter-desktop py-unit-6 grid lg:grid-cols-[280px_1fr] gap-unit-4">
+  <aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">CLASSICAL CONTROL LAB</span><h1 class="font-headline-modal text-headline-modal mt-2">Second-Order Damping</h1><p class="text-[11px] text-on-surface-variant mt-2">See how ζ controls overshoot and how ωₙ controls response speed.</p>
+    <label class="block mt-4 text-[10px]">Damping ratio ζ <b id="soZVal">0.50</b></label><input id="soZ" type="range" min="0.1" max="1.5" step="0.05" value="0.5" class="w-full"/>
+    <label class="block mt-4 text-[10px]">Natural frequency ωₙ <b id="soWVal">2.0</b></label><input id="soW" type="range" min="0.5" max="6" step="0.1" value="2" class="w-full"/>
+    <div class="mt-4 p-unit-3 bg-primary-fixed rounded font-code-mono text-[10px]">G(s)=ωₙ²/(s²+2ζωₙs+ωₙ²)</div>
+  </aside>
+  <main class="grid gap-unit-4"><section class="bg-white rounded-xl p-unit-4 shadow-md"><canvas id="soCanvas" class="w-full h-[310px]"></canvas></section><section class="bg-[#102535] text-[#a7f3c8] rounded-xl p-unit-4"><div class="text-white font-bold text-[11px] mb-2">MATLAB practice</div><pre id="soCode" class="text-[10px] whitespace-pre-wrap"></pre></section><section class="bg-primary-fixed rounded-xl p-unit-4 text-[11px]"><b>Goal:</b> connect damping ratio to overshoot and natural frequency to speed. Compare underdamped, critically damped, and overdamped responses.</section></main>
+</div></section>
+
+<section id="view-rootlocus" class="tab-view">
+<div class="max-w-[1180px] mx-auto px-gutter-desktop py-unit-6 grid lg:grid-cols-[280px_1fr] gap-unit-4">
+<aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">DESIGN LAB</span><h1 class="font-headline-modal text-headline-modal mt-2">Root-Locus / Gain Explorer</h1><p class="text-[11px] text-on-surface-variant mt-2">For G(s)=1/[s(s+2)], vary K and see where the closed-loop poles move.</p><label class="block mt-4 text-[10px]">Loop gain K <b id="rlKVal">1.0</b></label><input id="rlK" type="range" min="0" max="12" step="0.1" value="1" class="w-full"/><div class="mt-4 p-unit-3 bg-primary-fixed rounded font-code-mono text-[10px]">s²+2s+K=0</div></aside>
+<main class="grid gap-unit-4"><section class="bg-white rounded-xl p-unit-4 shadow-md"><canvas id="rlCanvas" class="w-full h-[310px]"></canvas></section><section class="bg-[#102535] text-[#a7f3c8] rounded-xl p-unit-4"><div class="text-white font-bold text-[11px] mb-2">MATLAB practice</div><pre id="rlCode" class="text-[10px] whitespace-pre-wrap"></pre></section><section class="bg-primary-fixed rounded-xl p-unit-4 text-[11px]"><b>Goal:</b> understand that changing gain moves closed-loop poles. Pole position predicts damping, oscillation, and stability before you simulate the time response.</section></main>
+</div></section>
+
+<section id="view-statespace" class="tab-view">
+<div class="max-w-[1180px] mx-auto px-gutter-desktop py-unit-6 grid lg:grid-cols-[280px_1fr] gap-unit-4">
+<aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">STATE-SPACE LAB</span><h1 class="font-headline-modal text-headline-modal mt-2">Eigenvalue & State Motion</h1><p class="text-[11px] text-on-surface-variant mt-2">Set a real part σ and imaginary part ω for a conjugate eigenvalue pair λ=σ±jω.</p><label class="block mt-4 text-[10px]">Real part σ <b id="ssSigVal">-0.50</b></label><input id="ssSig" type="range" min="-2" max="1" step="0.05" value="-0.5" class="w-full"/><label class="block mt-4 text-[10px]">Imaginary part ω <b id="ssOmVal">2.00</b></label><input id="ssOm" type="range" min="0" max="6" step="0.1" value="2" class="w-full"/></aside>
+<main class="grid gap-unit-4"><section class="bg-white rounded-xl p-unit-4 shadow-md"><canvas id="ssCanvas" class="w-full h-[310px]"></canvas></section><section class="bg-[#102535] text-[#a7f3c8] rounded-xl p-unit-4"><div class="text-white font-bold text-[11px] mb-2">MATLAB practice</div><pre id="ssCode" class="text-[10px] whitespace-pre-wrap"></pre></section><section class="bg-primary-fixed rounded-xl p-unit-4 text-[11px]"><b>Goal:</b> if σ&lt;0, modes decay; σ=0 gives sustained oscillation; σ&gt;0 gives growing motion. ω controls oscillation frequency.</section></main>
+</div></section>
+
+<section id="view-pidlab" class="tab-view">
+<div class="max-w-[1180px] mx-auto px-gutter-desktop py-unit-6 grid lg:grid-cols-[280px_1fr] gap-unit-4">
+<aside class="bg-white rounded-xl p-unit-5 shadow-md"><span class="font-label-caps text-label-caps text-primary">PID LAB</span><h1 class="font-headline-modal text-headline-modal mt-2">PID Tuning Playground</h1><p class="text-[11px] text-on-surface-variant mt-2">Control a simple second-order plant and watch how P, I, and D change the response.</p>
+<label class="block mt-3 text-[10px]">Kp <b id="pidPVal">2.0</b></label><input id="pidP" type="range" min="0" max="10" step="0.1" value="2" class="w-full"/>
+<label class="block mt-3 text-[10px]">Ki <b id="pidIVal">0.5</b></label><input id="pidI" type="range" min="0" max="5" step="0.1" value="0.5" class="w-full"/>
+<label class="block mt-3 text-[10px]">Kd <b id="pidDVal">0.3</b></label><input id="pidD" type="range" min="0" max="3" step="0.05" value="0.3" class="w-full"/></aside>
+<main class="grid gap-unit-4"><section class="bg-white rounded-xl p-unit-4 shadow-md"><canvas id="pidCanvas" class="w-full h-[310px]"></canvas></section><section class="bg-[#102535] text-[#a7f3c8] rounded-xl p-unit-4"><div class="text-white font-bold text-[11px] mb-2">MATLAB practice</div><pre id="pidCode" class="text-[10px] whitespace-pre-wrap"></pre></section><section class="bg-primary-fixed rounded-xl p-unit-4 text-[11px]"><b>Goal:</b> P reacts to current error, I removes persistent error, and D adds damping by reacting to error rate. Tune them while watching overshoot and settling.</section></main>
+</div></section>
 
 <section id="view-pendulum" class="tab-view">
 <div class="max-w-[1320px] mx-auto px-gutter-desktop py-unit-5">
@@ -253,7 +331,7 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 </section>
 </main>
 <script>
-const tabs=['curriculum','labs','pendulum','robotics','theory','formulas','benchmarks'];
+const tabs=['curriculum','labs','firstorder','secondorder','rootlocus','statespace','pidlab','pendulum','robotics','theory','formulas','benchmarks'];
 function switchMainTab(name){
   tabs.forEach(t=>document.getElementById('view-'+t)?.classList.toggle('active',t===name));
   document.querySelectorAll('[data-main-tab]').forEach(b=>{
@@ -342,6 +420,60 @@ document.querySelectorAll('.robotTarget').forEach(b=>b.onclick=()=>setRobotTarge
 document.getElementById('applyRobotTarget').onclick=()=>setRobotTarget(document.getElementById('robotTargetX').value,document.getElementById('robotTargetY').value);
 document.getElementById('resetRobotTarget').onclick=()=>setRobotTarget(.20,.60);
 
+
+function labCanvas(id){
+  const c=document.getElementById(id); if(!c)return null;
+  const r=c.getBoundingClientRect(); if(r.width<50||r.height<50)return null;
+  const d=devicePixelRatio||1;c.width=r.width*d;c.height=r.height*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return {c,x,w:r.width,h:r.height};
+}
+function plotLab(id,points,{xmin=0,xmax=10,ymin=-.2,ymax=1.8,label=''}={}){
+  const o=labCanvas(id);if(!o)return;const {x,w,h}=o,m=38;
+  x.fillStyle='#071622';x.fillRect(0,0,w,h);x.strokeStyle='#25485f';x.lineWidth=1;
+  for(let i=0;i<=10;i++){const px=m+i*(w-2*m)/10;x.beginPath();x.moveTo(px,m);x.lineTo(px,h-m);x.stroke()}
+  for(let i=0;i<=6;i++){const py=m+i*(h-2*m)/6;x.beginPath();x.moveTo(m,py);x.lineTo(w-m,py);x.stroke()}
+  const mapX=t=>m+(t-xmin)/(xmax-xmin)*(w-2*m),mapY=v=>h-m-(v-ymin)/(ymax-ymin)*(h-2*m);
+  x.strokeStyle='#55e5a7';x.lineWidth=3;x.beginPath();points.forEach((p,i)=>{const px=mapX(p[0]),py=mapY(p[1]);i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();
+  x.strokeStyle='#9bb1c0';x.setLineDash([6,5]);x.beginPath();x.moveTo(m,mapY(1));x.lineTo(w-m,mapY(1));x.stroke();x.setLineDash([]);
+  x.fillStyle='#c7d7e2';x.font='11px Inter';x.fillText(label,44,20);
+}
+function renderFirstOrder(){
+  const K=+document.getElementById('foK').value,tau=+document.getElementById('foTau').value;
+  document.getElementById('foKVal').textContent=K.toFixed(1);document.getElementById('foTauVal').textContent=tau.toFixed(1)+' s';
+  const pts=[];for(let t=0;t<=10;t+=.04)pts.push([t,K*(1-Math.exp(-t/tau))]);plotLab('foCanvas',pts,{ymin:-.1,ymax:Math.max(1.3,K*1.15),label:'Step response y(t)'});
+  document.getElementById('foCode').textContent="K = "+K.toFixed(1)+"; tau = "+tau.toFixed(1)+";\ns = tf('s');\nG = K/(tau*s + 1);\nstep(G); grid on;\ntitle('First-Order Step Response');";
+}
+function renderSecondOrder(){
+  const z=+document.getElementById('soZ').value,wn=+document.getElementById('soW').value;document.getElementById('soZVal').textContent=z.toFixed(2);document.getElementById('soWVal').textContent=wn.toFixed(1);
+  const pts=[];for(let t=0;t<=10;t+=.02){let y;if(z<1){const wd=wn*Math.sqrt(1-z*z),phi=Math.acos(z);y=1-Math.exp(-z*wn*t)/Math.sqrt(1-z*z)*Math.sin(wd*t+phi)}else if(Math.abs(z-1)<.01)y=1-Math.exp(-wn*t)*(1+wn*t);else{const a=Math.sqrt(z*z-1),r1=-wn*(z-a),r2=-wn*(z+a);y=1+(r2*Math.exp(r1*t)-r1*Math.exp(r2*t))/(r1-r2)}pts.push([t,y])}plotLab('soCanvas',pts,{ymin:-.1,ymax:2,label:'Second-order step response'});
+  document.getElementById('soCode').textContent="zeta = "+z.toFixed(2)+"; wn = "+wn.toFixed(1)+";\ns = tf('s');\nG = wn^2/(s^2 + 2*zeta*wn*s + wn^2);\nstep(G); grid on;\nstepinfo(G)";
+}
+function renderRootLocus(){
+  const K=+document.getElementById('rlK').value;document.getElementById('rlKVal').textContent=K.toFixed(1);
+  const o=labCanvas('rlCanvas');if(!o)return;const {x,w,h}=o,m=35;x.fillStyle='#071622';x.fillRect(0,0,w,h);const mapX=v=>m+(v+5)/7*(w-2*m),mapY=v=>h/2-v/5*(h-2*m);
+  x.strokeStyle='#35576a';x.beginPath();x.moveTo(m,h/2);x.lineTo(w-m,h/2);x.moveTo(mapX(0),m);x.lineTo(mapX(0),h-m);x.stroke();
+  x.strokeStyle='#5cc8ed';x.lineWidth=2;x.beginPath();for(let k=0;k<=12;k+=.05){const disc=4-4*k;if(disc>=0){const p1=(-2+Math.sqrt(disc))/2,p2=(-2-Math.sqrt(disc))/2;x.lineTo(mapX(p1),mapY(0));x.lineTo(mapX(p2),mapY(0))}else{const re=-1,im=Math.sqrt(-disc)/2;x.lineTo(mapX(re),mapY(im));x.lineTo(mapX(re),mapY(-im))}}x.stroke();
+  const disc=4-4*K;let poles;if(disc>=0)poles=[[(-2+Math.sqrt(disc))/2,0],[(-2-Math.sqrt(disc))/2,0]];else poles=[[-1,Math.sqrt(-disc)/2],[-1,-Math.sqrt(-disc)/2]];
+  x.fillStyle='#f5bc58';poles.forEach(p=>{x.beginPath();x.arc(mapX(p[0]),mapY(p[1]),7,0,2*Math.PI);x.fill()});x.fillStyle='#c7d7e2';x.font='11px Inter';x.fillText('Closed-loop poles for K='+K.toFixed(1),42,20);
+  document.getElementById('rlCode').textContent="s = tf('s');\nG = 1/(s*(s+2));\nrlocus(G); grid on;\nK = "+K.toFixed(1)+";\nT = feedback(K*G,1);\npole(T)";
+}
+function renderStateSpace(){
+  const sig=+document.getElementById('ssSig').value,om=+document.getElementById('ssOm').value;document.getElementById('ssSigVal').textContent=sig.toFixed(2);document.getElementById('ssOmVal').textContent=om.toFixed(2);
+  const pts=[];for(let t=0;t<=10;t+=.02)pts.push([t,Math.exp(sig*t)*Math.cos(om*t)]);const amp=Math.min(5,Math.max(1.3,Math.exp(Math.max(0,sig)*10)*1.1));plotLab('ssCanvas',pts,{ymin:-amp,ymax:amp,label:'x₁(t)=e^(σt)cos(ωt)'});
+  document.getElementById('ssCode').textContent="sigma = "+sig.toFixed(2)+"; omega = "+om.toFixed(2)+";\nA = [sigma -omega; omega sigma];\nB = [0;0]; C = [1 0]; D = 0;\nsys = ss(A,B,C,D);\nt = 0:0.01:10;\ninitial(sys,[1;0],t); grid on;\neig(A)";
+}
+function renderPid(){
+  const kp=+document.getElementById('pidP').value,ki=+document.getElementById('pidI').value,kd=+document.getElementById('pidD').value;
+  document.getElementById('pidPVal').textContent=kp.toFixed(1);document.getElementById('pidIVal').textContent=ki.toFixed(1);document.getElementById('pidDVal').textContent=kd.toFixed(2);
+  let y=0,v=0,int=0,prevE=1;const pts=[],dt=.01;for(let t=0;t<=10;t+=dt){const e=1-y;int+=e*dt;const de=(e-prevE)/dt,u=kp*e+ki*int+kd*de;const a=u-1.2*v-y;v+=a*dt;y+=v*dt;prevE=e;pts.push([t,y]);if(!Number.isFinite(y)||Math.abs(y)>10)break}plotLab('pidCanvas',pts,{ymin:-.2,ymax:2.2,label:'Closed-loop tracking response'});
+  document.getElementById('pidCode').textContent="Kp = "+kp.toFixed(1)+"; Ki = "+ki.toFixed(1)+"; Kd = "+kd.toFixed(2)+";\ns = tf('s');\nG = 1/(s^2 + 1.2*s + 1);\nC = pid(Kp,Ki,Kd);\nT = feedback(C*G,1);\nstep(T); grid on;\nstepinfo(T)";
+}
+['foK','foTau'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderFirstOrder));
+['soZ','soW'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderSecondOrder));
+document.getElementById('rlK')?.addEventListener('input',renderRootLocus);
+['ssSig','ssOm'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderStateSpace));
+['pidP','pidI','pidD'].forEach(id=>document.getElementById(id)?.addEventListener('input',renderPid));
+document.querySelectorAll('[data-main-tab]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{const n=b.dataset.mainTab;if(n==='firstorder')renderFirstOrder();if(n==='secondorder')renderSecondOrder();if(n==='rootlocus')renderRootLocus();if(n==='statespace')renderStateSpace();if(n==='pidlab')renderPid()},80)));
+
 const formulaGroups=[
   ['Algebra & Trigonometry',[
     ['Quadratic formula','ax²+bx+c=0','x=(-b±√(b²-4ac))/(2a)'],
@@ -419,4 +551,4 @@ document.getElementById('downloadFormulaSheet')?.addEventListener('click',()=>{
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=9"></script><script src="course-engine.js?v=11"></script></body></html>
+<script src="course-content.js?v=12"></script><script src="course-engine.js?v=12"></script></body></html>

@@ -323,8 +323,8 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 <section id="view-benchmarks" class="tab-view">
   <div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8">
     <span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span>
-    <h1 class="font-headline-section text-headline-section mt-2">13-Stage Self-Study Checkpoints</h1>
-    <p class="text-[13px] text-on-surface-variant mt-2">Loading checkpoint questions from the full course curriculum…</p>
+    <h1 class="font-headline-section text-headline-section mt-2">Stage Mastery Checkpoints</h1>
+    <p class="text-[13px] text-on-surface-variant mt-2">Benchmark status is loading…</p>
   </div>
 </section>
 </main>
@@ -557,4 +557,4 @@ document.getElementById('downloadFormulaSheet')?.addEventListener('click',()=>{
 
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=13"></script><script src="course-engine.js?v=13"></script></body></html>
+<script src="course-content.js?v=14"></script><script src="course-engine.js?v=14"></script></body></html>

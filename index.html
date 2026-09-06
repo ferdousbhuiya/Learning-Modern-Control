@@ -18,6 +18,21 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 .tab-pill:not(.mc-active){background:#e8eeff!important;color:#001b3f!important}
 #ctrlLqr.mc-active,#ctrlPole.mc-active{background:#005bb3!important;color:#fff!important}
 #ctrlLqr:not(.mc-active),#ctrlPole:not(.mc-active){background:#e8eeff!important;color:#001b3f!important}
+.path-card{display:flex;flex-direction:column;min-height:285px;border:1px solid #d8e1ee!important;border-radius:16px!important;box-shadow:0 10px 28px rgba(24,55,92,.10)!important;background:#fff;overflow:hidden}
+.path-card:before{content:"";display:block;height:6px;background:linear-gradient(90deg,#1169c7,#42a5f5);margin:-20px -20px 18px}
+.path-card:nth-child(2):before{background:linear-gradient(90deg,#0f9d73,#55c59e)}
+.path-card:nth-child(3):before{background:linear-gradient(90deg,#7457d5,#9a82e8)}
+.path-card .path-progress-wrap{margin-top:auto;padding-top:18px}
+.path-card .path-progress{height:8px;background:#e8eef8;border-radius:999px;overflow:hidden}.path-card .path-progress>i{display:block;height:100%;background:#176dc4;border-radius:inherit}
+.path-card:nth-child(2) .path-progress>i{background:#14966e}.path-card:nth-child(3) .path-progress>i{background:#755bd0}
+.formula-section{break-inside:avoid}
+.formula-table{width:100%;border-collapse:collapse}.formula-table th,.formula-table td{border:1px solid #d7dfeb;padding:8px 10px;vertical-align:top;font-size:11px}.formula-table th{background:#eef3fb;text-align:left;color:#17395e}.formula-eq{font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#0c2e52}
+@media print{
+  header,.bg-surface-container-low,[data-formula-action],footer{display:none!important}
+  body{background:#fff!important;color:#000!important}.tab-view{display:none!important}#view-formulas{display:block!important}
+  #view-formulas .max-w-[1280px]{max-width:none!important;padding:0!important}.formula-section{box-shadow:none!important;border:1px solid #bbb!important}
+  @page{margin:0.55in}
+}
 </style>
 </head>
 <body class="bg-surface text-on-surface antialiased">
@@ -38,6 +53,7 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
   <div class="max-w-[1320px] mx-auto px-gutter-desktop flex flex-wrap gap-unit-2">
     <button class="tab-pill bg-primary text-on-primary px-unit-4 py-unit-2 rounded-lg" data-main-tab="curriculum">Curriculum</button>
     <button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="theory">Theory & Math Docs</button>
+    <button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="formulas">Formula Sheet</button>
     <button class="tab-pill bg-surface-container px-unit-4 py-unit-2 rounded-lg" data-main-tab="benchmarks">Benchmarks & Problem Sets</button>
   </div>
 </section>
@@ -47,7 +63,7 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
     <div><span class="font-label-caps text-label-caps text-primary uppercase">Modern Control Computational Lab</span><h1 class="font-display-hero text-display-hero max-md:text-[34px] max-md:leading-[40px] mt-unit-2">Zero-to-Advanced Control Systems Mastery</h1><p class="font-body-base text-body-base text-on-surface-variant max-w-3xl mt-unit-4">A rigorous interactive platform for classical control, state-space analysis, controllability, observability, feedback design, observers, Lyapunov stability, LQR, robotics, and computational verification.</p><div class="flex flex-wrap gap-unit-3 mt-unit-5"><button class="px-unit-5 py-unit-3 rounded-lg bg-primary text-on-primary font-title-card" data-main-tab="pendulum">Launch Interactive Lab</button><button class="px-unit-5 py-unit-3 rounded-lg bg-surface-container-high font-title-sub" data-main-tab="robotics">Open Robotics CTC Lab</button></div></div>
     <div class="rounded-xl bg-surface-container-lowest p-unit-5 shadow-md flex flex-col gap-unit-4"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-primary">LIVE SYSTEM TELEMETRY</span><span class="text-secondary text-[11px]">Stable • Verified</span></div><div class="canvas-dark rounded-lg h-[260px] relative overflow-hidden"><svg viewBox="0 0 520 260" class="absolute inset-0 w-full h-full"><line x1="40" y1="210" x2="480" y2="210" stroke="#385569"/><line x1="260" y1="28" x2="260" y2="230" stroke="#385569"/><path d="M35 202 C100 40 160 55 220 145 S350 190 490 105" fill="none" stroke="#54e5a7" stroke-width="4"/><circle cx="140" cy="40" r="5" fill="#10a978"/><circle cx="280" cy="40" r="4" fill="#005bb3"/></svg></div><div class="grid grid-cols-3 gap-unit-2 text-center"><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Gramian Rank</div><div class="font-bold text-primary">4 of 4</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Settling Time</div><div class="font-bold text-secondary">1.42 sec</div></div><div class="bg-surface-container p-unit-2 rounded"><div class="text-[9px] uppercase">Overshoot</div><div class="font-bold">&lt; 4.8%</div></div></div></div>
   </section>
-  <section class="max-w-[1320px] mx-auto px-gutter-desktop pt-unit-4 pb-unit-5">
+  <section id="learning-path-section" class="max-w-[1320px] mx-auto px-gutter-desktop pt-unit-4 pb-unit-5">
    <div id="learning-path-cards"></div>
    <div class="flex justify-center mt-unit-5">
      <button class="px-unit-6 py-unit-3 rounded-lg bg-secondary text-on-secondary font-title-card" data-main-tab="labs">Open Practical Labs →</button>
@@ -57,7 +73,7 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
  <footer class="mt-unit-8 border-t border-outline-variant/40 bg-[#071827] text-white">
    <div class="max-w-[1320px] mx-auto px-gutter-desktop py-unit-8 grid md:grid-cols-[220px_1fr_auto] gap-unit-6 items-center">
      <div class="flex items-center gap-unit-3">
-       <img src="https://raw.githubusercontent.com/ferdousbhuiya/Website_for_dataAnalytics_practice/main/logo.png" alt="Ferdous logo" class="w-16 h-16 object-contain rounded-lg bg-white/95 p-1"/>
+       <img src="https://raw.githubusercontent.com/ferdousbhuiya/Website_for_dataAnalytics_practice/main/icon.png" alt="Ferdous logo" class="w-16 h-16 object-contain"/>
        <div><strong class="block text-[15px]">FERDOUS</strong><span class="block text-[9px] text-slate-300">Learning • Practice • Build</span></div>
      </div>
      <div>
@@ -211,6 +227,23 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 
 <section id="view-theory" class="tab-view"><div class="max-w-[1200px] mx-auto px-gutter-desktop py-unit-8"><span class="font-label-caps text-label-caps text-primary">THEORY & MATH DOCS</span><h1 class="font-headline-section text-headline-section mt-2">State-Space & Modern Control Reference</h1><div class="grid md:grid-cols-2 gap-unit-4 mt-6"><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">State-Space Form</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">ẋ=Ax+Bu<br/>y=Cx+Du</div><p class="text-[13px] text-on-surface-variant mt-3">A captures internal dynamics, B input influence, C output mapping, and D direct feedthrough.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Controllability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒞=[B AB … Aⁿ⁻¹B]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means the input can influence every state direction.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Observability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">𝒪=[C; CA; …; CAⁿ⁻¹]</div><p class="text-[13px] text-on-surface-variant mt-3">Full rank means internal states can be reconstructed from outputs over time.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Lyapunov Equation</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">AᵀP+PA=-Q</div><p class="text-[13px] text-on-surface-variant mt-3">For Hurwitz A and Q&gt;0, the positive definite solution P gives a quadratic stability certificate.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">LQR Cost</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">J=∫(xᵀQx+uᵀRu)dt</div><p class="text-[13px] text-on-surface-variant mt-3">Q weights state error; R weights control effort.</p></article><article class="bg-white rounded-xl p-unit-5 shadow-sm"><h3 class="font-title-card">Discrete-Time Stability</h3><div class="mt-3 p-unit-3 rounded bg-primary-fixed font-code-mono">x[k+1]=A_dx[k]+B_du[k]</div><p class="text-[13px] text-on-surface-variant mt-3">Stable discrete poles lie strictly inside the unit circle.</p></article></div></div></section>
 
+<section id="view-formulas" class="tab-view">
+  <div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8">
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <span class="font-label-caps text-label-caps text-primary">QUICK REFERENCE</span>
+        <h1 class="font-headline-section text-headline-section mt-2">Modern Control Formula Sheet</h1>
+        <p class="text-[13px] text-on-surface-variant mt-2 max-w-4xl">A printable reference of the algebra, calculus, differential-equation, Laplace-transform, matrix, classical-control, state-space, stability, and optimal-control formulas used across this course.</p>
+      </div>
+      <div class="flex gap-unit-2" data-formula-action>
+        <button id="printFormulaSheet" class="px-unit-4 py-unit-2 rounded-lg bg-primary text-on-primary font-bold text-[10px]">Print / Save PDF</button>
+        <button id="downloadFormulaSheet" class="px-unit-4 py-unit-2 rounded-lg bg-secondary text-on-secondary font-bold text-[10px]">Download HTML</button>
+      </div>
+    </div>
+    <div id="formulaSheetContent" class="grid gap-unit-4 mt-6"></div>
+  </div>
+</section>
+
 <section id="view-benchmarks" class="tab-view">
   <div class="max-w-[1280px] mx-auto px-gutter-desktop py-unit-8">
     <span class="font-label-caps text-label-caps text-primary">BENCHMARKS & PROBLEM SETS</span>
@@ -220,7 +253,7 @@ html,body{margin:0;padding:0}body{overscroll-behavior:none;font-family:Inter,san
 </section>
 </main>
 <script>
-const tabs=['curriculum','labs','pendulum','robotics','theory','benchmarks'];
+const tabs=['curriculum','labs','pendulum','robotics','theory','formulas','benchmarks'];
 function switchMainTab(name){
   tabs.forEach(t=>document.getElementById('view-'+t)?.classList.toggle('active',t===name));
   document.querySelectorAll('[data-main-tab]').forEach(b=>{
@@ -228,7 +261,10 @@ function switchMainTab(name){
   });
   window.scrollTo({top:100,behavior:'smooth'});
 }
-document.querySelectorAll('[data-main-tab]').forEach(b=>b.addEventListener('click',()=>switchMainTab(b.dataset.mainTab)));
+document.querySelectorAll('[data-main-tab]').forEach(b=>b.addEventListener('click',()=>{
+  const name=b.dataset.mainTab; switchMainTab(name);
+  if(name==='curriculum') setTimeout(()=>document.getElementById('learning-path-section')?.scrollIntoView({behavior:'smooth',block:'start'}),60);
+}));
 switchMainTab('curriculum');
 document.querySelectorAll('[data-tier]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.tier).classList.toggle('open')));
 document.getElementById('expandAll')?.addEventListener('click',()=>document.querySelectorAll('.tier-drawer').forEach(x=>x.classList.add('open')));
@@ -306,6 +342,81 @@ document.querySelectorAll('.robotTarget').forEach(b=>b.onclick=()=>setRobotTarge
 document.getElementById('applyRobotTarget').onclick=()=>setRobotTarget(document.getElementById('robotTargetX').value,document.getElementById('robotTargetY').value);
 document.getElementById('resetRobotTarget').onclick=()=>setRobotTarget(.20,.60);
 
+const formulaGroups=[
+  ['Algebra & Trigonometry',[
+    ['Quadratic formula','ax²+bx+c=0','x=(-b±√(b²-4ac))/(2a)'],
+    ['Exponent rule','aᵐaⁿ','aᵐ⁺ⁿ'],
+    ['Log rules','ln(ab), ln(a/b), ln(aⁿ)','ln a+ln b, ln a-ln b, n ln a'],
+    ['Euler identity','e^(jθ)','cosθ + j sinθ'],
+    ['Trig identity','sin²θ+cos²θ','1']
+  ]],
+  ['Differential & Integral Calculus',[
+    ['Power derivative','d(xⁿ)/dx','n xⁿ⁻¹'],
+    ['Product rule','d(uv)/dx','u dv/dx + v du/dx'],
+    ['Chain rule','d f(g(x))/dx','f′(g(x))g′(x)'],
+    ['Exponential derivative','d(e^(ax))/dx','a e^(ax)'],
+    ['Basic integral','∫xⁿ dx','xⁿ⁺¹/(n+1)+C, n≠-1'],
+    ['Exponential integral','∫e^(ax) dx','e^(ax)/a + C']
+  ]],
+  ['Differential Equations',[
+    ['First-order homogeneous','ẋ+ax=0','x(t)=x(0)e^(-at)'],
+    ['First-order forced','ẋ+ax=bu(t)','solve by integrating factor or Laplace transform'],
+    ['Second-order standard form','ẍ+2ζωₙẋ+ωₙ²x=0','poles: s=-ζωₙ ± jωₙ√(1-ζ²)']
+  ]],
+  ['Laplace Transforms',[
+    ['Definition','L{f(t)}','F(s)=∫₀∞ f(t)e^(-st)dt'],
+    ['Constant','L{1}','1/s'],
+    ['Exponential','L{e^(at)}','1/(s-a)'],
+    ['Sine','L{sinωt}','ω/(s²+ω²)'],
+    ['Cosine','L{cosωt}','s/(s²+ω²)'],
+    ['First derivative','L{ḟ}','sF(s)-f(0)'],
+    ['Second derivative','L{f̈}','s²F(s)-sf(0)-ḟ(0)'],
+    ['Final value theorem','lim t→∞ f(t)','lim s→0 sF(s), when valid']
+  ]],
+  ['Matrices & Linear Algebra',[
+    ['Eigenvalue equation','Av=λv','det(λI-A)=0'],
+    ['Matrix inverse','A⁻¹','A⁻¹A=I'],
+    ['Rank','rank(A)','number of linearly independent rows/columns'],
+    ['Matrix exponential','e^(At)','I+At+(At)²/2!+…']
+  ]],
+  ['Classical Control',[
+    ['Closed-loop transfer','negative feedback','T(s)=G(s)/(1+G(s)H(s))'],
+    ['2nd-order form','standard denominator','s²+2ζωₙs+ωₙ²'],
+    ['Settling time (2%)','approx.','Tₛ≈4/(ζωₙ)'],
+    ['Percent overshoot','underdamped','%OS=100e^(-ζπ/√(1-ζ²))'],
+    ['Steady-state constants','unity feedback','Kp=lim G(s), Kv=lim sG(s), Ka=lim s²G(s)']
+  ]],
+  ['State-Space & Modern Control',[
+    ['State model','continuous time','ẋ=Ax+Bu, y=Cx+Du'],
+    ['Free response','u=0','x(t)=e^(At)x(0)'],
+    ['Forced response','general','x(t)=e^(At)x(0)+∫₀ᵗe^(A(t-τ))Bu(τ)dτ'],
+    ['Controllability matrix','n states','C=[B AB … Aⁿ⁻¹B]'],
+    ['Observability matrix','n states','O=[C; CA; …; CAⁿ⁻¹]'],
+    ['State feedback','control law','u=-Kx+Nr'],
+    ['Closed-loop matrix','state feedback','A_cl=A-BK'],
+    ['Observer','Luenberger','x̂̇=Ax̂+Bu+L(y-Cx̂)'],
+    ['Observer error','e=x-x̂','ė=(A-LC)e']
+  ]],
+  ['Stability & Optimal Control',[
+    ['Lyapunov equation','continuous time','AᵀP+PA=-Q'],
+    ['Discrete stability','x[k+1]=A_dx[k]','all eigenvalues of A_d inside unit circle'],
+    ['LQR cost','infinite horizon','J=∫₀∞(xᵀQx+uᵀRu)dt'],
+    ['CARE','continuous LQR','AᵀP+PA-PBR⁻¹BᵀP+Q=0'],
+    ['LQR gain','optimal feedback','K=R⁻¹BᵀP']
+  ]]
+];
+function renderFormulaSheet(){
+  const root=document.getElementById('formulaSheetContent'); if(!root)return;
+  root.innerHTML=formulaGroups.map(g=>'<section class="formula-section bg-white rounded-xl p-unit-5 shadow-sm border border-outline-variant/40"><h2 class="font-title-card text-[16px]">'+g[0]+'</h2><table class="formula-table mt-3"><thead><tr><th>Topic</th><th>Form</th><th>Formula / Result</th></tr></thead><tbody>'+g[1].map(r=>'<tr><td>'+r[0]+'</td><td class="formula-eq">'+r[1]+'</td><td class="formula-eq">'+r[2]+'</td></tr>').join('')+'</tbody></table></section>').join('');
+}
+renderFormulaSheet();
+document.getElementById('printFormulaSheet')?.addEventListener('click',()=>window.print());
+document.getElementById('downloadFormulaSheet')?.addEventListener('click',()=>{
+  const body=document.getElementById('formulaSheetContent')?.innerHTML||'';
+  const html='<!doctype html><html><head><meta charset="utf-8"><title>Modern Control Formula Sheet</title><style>body{font-family:Arial,sans-serif;margin:32px;color:#132d4f}h1{margin-bottom:8px}section{margin:20px 0;break-inside:avoid}table{width:100%;border-collapse:collapse}th,td{border:1px solid #bbb;padding:8px;text-align:left;vertical-align:top}th{background:#eef3fb}.formula-eq{font-family:Georgia,serif;font-size:16px}@media print{button{display:none}}</style></head><body><h1>Modern Control Formula Sheet</h1><p>Printable quick reference for the Modern Control Learning course.</p>'+body+'</body></html>';
+  const blob=new Blob([html],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Modern-Control-Formula-Sheet.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
+});
+
 const answers={1:'A',2:'A',3:'A',4:'A'};document.querySelectorAll('.problem-option').forEach(b=>b.onclick=()=>{const p=b.dataset.problem,c=b.dataset.choice,ok=answers[p]===c;document.querySelectorAll('[data-problem="'+p+'"]').forEach(x=>x.classList.remove('selected-correct','selected-wrong'));b.classList.add(ok?'selected-correct':'selected-wrong');document.getElementById('p'+p+'Feedback').textContent=ok?'Correct. Explain the reason before moving on.':'Not correct. Review the related theory and try again.';});
 </script>
-<script src="course-content.js?v=9"></script><script src="course-engine.js?v=10"></script></body></html>
+<script src="course-content.js?v=9"></script><script src="course-engine.js?v=11"></script></body></html>
